@@ -15,4 +15,4 @@
  - See /data/ README for coordinate extraction instructions
 
 
-###Tedman Marszalek, Ryan Coombs, Jingheng Zhang, Faris Toqan, and Ian Thomas
+#####Tedman Marszalek, Ryan Coombs, Jingheng Zhang, Faris Toqan, and Ian Thomas
