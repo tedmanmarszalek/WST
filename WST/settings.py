@@ -25,7 +25,7 @@ SECRET_KEY = 'hk_eo2wt=&xd0v)(vp0!w+8)8tla0=keetl*17%a3#twt-c%*f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['urbanaparkstour.org']
 
 
 # Application definition
