@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var port = process.env.PORT || 8080;
+var ip = process.env.IP || '10.128.18.238';
 
 /* Place Models Here */
 // require('./models/Model');
@@ -29,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', routes);
 
-app.listen(port);
+app.listen(port, ip);
 console.log("app started on " + port);
 
 // catch 404 and forward to error handler
