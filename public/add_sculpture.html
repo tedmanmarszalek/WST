@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+<script>
+var app = angular.module('addSculpture', []);
+
+app.controller('AddSculptCtrl', function ($scope, $http) {
+  
+  $scope.name = "";
+  $scope.video = "";
+  $scope.image = "";
+  $scope.audio = "";
+  $scope.active = "";
+  $scope.coordinates = "";
+  $scope.artist = "";
+  $scope.artist_statement = "";
+  $scope.message  = "";
+
+  $scope.submit = function(){
+    var sculpture = { 
+              name: $scope.name, 
+    				  video: $scope.video,
+    				  image: $scope.image,
+    				  audio: $scope.audio,
+    				  active: $scope.active,
+    				  coordinates: $scope.coordinates,
+    				  artist: $scope.artist,
+    				  artist_statement: $scope.artist_statement
+    				};
+
+    $http.post('/sculpture', sculpture).then(function successCallback(response){
+        if(response.data.success === true){
+			$scope.message = "success";
+        }
+        else {
+          $scope.message = "error";
+        }
+
+    }, function errorCallback(response){
+      console.log("error");
+    });
+  }
+});
+</script>
+
+<body ng-app="addSculpture" ng-controller="AddSculptCtrl" style="overflow-x:hidden">
+
+    <p style="font-size:60px; font-family:Oxygen;">
+    	<b>Add Sculpture</b>
+    </p>
+
+  <form ng-submit="submit()"
+    <div class="col-md-4 col-md-offset-1">
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">name</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="username" 
+	        	ng-model="username">
+      	  </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">video</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="video" 
+	        	ng-model="video">
+      	  </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">image</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="image" 
+	        	ng-model="image">
+      	  </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">audio</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="audio" 
+	        	ng-model="audio">
+      	  </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">active</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="active" 
+	        	ng-model="active">
+      	  </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">coordinates</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="coordinates" 
+	        	ng-model="coordinates">
+      	  </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">artist</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="artist" 
+	        	ng-model="artist">
+      	  </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">artist statement</span>
+        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
+	        	placeholder="artist_statement" 
+	        	ng-model="artist_statement">
+      	  </div>
+        </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <p style="font-size:20px; padding-top:10px; color:red;"> {{ message }} </p>
+
+   </form>
+</body>
+</html>

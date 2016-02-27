@@ -7,34 +7,49 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var port = process.env.PORT || 8080;
-var ip = process.env.IP || '10.128.18.238';
+//var ip = process.env.IP || '10.128.18.238';
 
 /* Place Models Here */
-// require('./models/Model');
+require('./models/Sculptures.js');
 
 /* Database Connection */
-// mongoose.connect('mongodb://localhost');
+// mongoose.connect('mongodb://localhost:27017');
+var options = { server: {}, replset: {} }
+var mongodbURI = "mongodb://localhost:27017"
+var connection = mongoose.createConnection(mongodbURI, options)
+connection.on('error', function(err){
+  console.log(err)
+})
+connection.once('open', function(){
+  console.log("DB Connected")
+})
 
-/* Place Routes Here */
-// var routes = require('./routes/index');
-
+/* Server Config */
 var app = express();
 
-// uncomment after placing your favicon in /public
+// uncomment for splitting into backend and frontend folder
+// app.use('/', express.static('../frontend'))
+// app.use(favicon(path.join('../frontend', 'favicon.ico')));
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
-// app.use('/', routes);
+/* Place Routes Here */
+var sculpture_router = require('./routes/Sculptures.js');
+app.use('/sculpture', sculpture_router)
+
 
 // uncomment for local testing
-//app.listen(port);
+app.listen(port);
 
 // uncomment for live
-app.listen(port, ip); 
+// app.listen(port, ip); 
 console.log("app started on " + port);
 
 // catch 404 and forward to error handler
@@ -44,6 +59,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+
+
+/*
 // error handlers
 
 // development error handler
@@ -67,6 +85,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
+*/
 
 module.exports = app;
