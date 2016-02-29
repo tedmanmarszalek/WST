@@ -7,22 +7,15 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var port = process.env.PORT || 8080;
-//var ip = process.env.IP || '10.128.18.238';
+var ip = process.env.IP || '10.128.18.238';
 
 /* Place Models Here */
 require('./models/Sculptures.js');
 
 /* Database Connection */
-// mongoose.connect('mongodb://localhost:27017');
-var options = { server: {}, replset: {} }
 var mongodbURI = "mongodb://localhost:27017"
-var connection = mongoose.createConnection(mongodbURI, options)
-connection.on('error', function(err){
-  console.log(err)
-})
-connection.once('open', function(){
-  console.log("DB Connected")
-})
+//var mongodbURI = "mongodb://champfox:asdf@ds063140.mlab.com:63140/testdb"
+mongoose.connect(mongodbURI);
 
 /* Server Config */
 var app = express();
@@ -60,8 +53,6 @@ app.use(function(req, res, next) {
 });
 
 
-
-/*
 // error handlers
 
 // development error handler
@@ -85,6 +76,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-*/
+
 
 module.exports = app;

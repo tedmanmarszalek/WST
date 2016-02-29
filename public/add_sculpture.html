@@ -35,7 +35,7 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
     $http.post('/sculpture', sculpture).then(function successCallback(response){
         if(response.data.success === true){
-			$scope.message = "success";
+		    	$scope.message = "success";
         }
         else {
           $scope.message = "error";
