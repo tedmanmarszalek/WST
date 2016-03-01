@@ -5,13 +5,19 @@ var mongoose = require('mongoose');
 var Sculpture = mongoose.model('Sculpture');
 
 router.get('/', function(req, res){
-	res.send("Hello")
+
+  Sculpture.find(function(err, sculptures){
+    if(err){ return next(err); }
+
+    res.json(sculptures);
+  });
+  
 });
 
 router.post('/', function(req, res){
 
 	var sculpture_object = {
-		name: req.body.name,
+		sculpture_name: req.body.sculpture_name,
 		video: req.body.video,
 		image: req.body.image,
 		audio: req.body.audio,

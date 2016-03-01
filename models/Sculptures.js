@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var SculptureSchema = new Schema({
 	//name: {type: String, unique: true, required: true},
-	name: {type: String},
+	sculpture_name: {type: String},
 	video: {type: String},
 	image: {type: String},
 	audio: {type: String},

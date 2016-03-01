@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UPD</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="/images/favicon.ico"/>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  <script>
+
+var app = angular.module('list_sculptures', []);
+
+app.factory('sculptureListFactory', function($http){
+  var getData = function(){
+    return $http.get("/sculpture").then(function(result){
+      return result.data;
+    });  
+  }
+
+  return { getData: getData };
+});
+
+app.controller('SculptureListCtrl', function ($scope, sculptureListFactory) {
+  
+  $scope.sculptures = [];
+  $scope.addImage = false;
+
+  var sculpturePromise = sculptureListFactory.getData();
+
+  sculpturePromise.then(function(result) {
+    console.log("promise completed");
+    var data = result;
+
+    for(var i = 0; i < data.length; i++){
+      console.log("pushing" + data[i].sculpture_name + "to sculptures");
+      $scope.sculptures.push(data[i]); 
+    }
+
+  });
+});
+
+</script>
+</head>
+
+<body ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#" style="font-size:35px; padding-left:50px;"><b>UPD</b></a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="../navbar-fixed-top/">List Sculptures</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+  </nav>
+
+  <div ng-hide="sculptureSelected === true">
+    <div class="row" style="padding-top:50px;">
+        <div class="col-md-7 col-md-offset-3">
+      <p style="font-size:40px; padding-bottom:20px;">Sculptures</p>
+      </div>
+    </div>
+
+    <div class="container col-md-offset-2">
+      <table class = "table">
+        <thead>
+          <tr>
+            <th class="col-md-3"> Name </th>
+          </tr>
+        <thead>
+
+        <tbody>
+          <tr ng-repeat="sculpture in sculptures">
+            <td style="padding-top:12px;"> {{ sculpture.sculpture_name }} </td>
+            <td> 
+              <button type="button" class="btn btn-info" ng-click="addImage(sculpture_name)">Add Image</button>
+              <button type="button" class="btn btn-info" ng-click="addVideo(sculpture_name)">Add Audio</button>
+              <button type="button" class="btn btn-info" ng-click="addAudio(sculpture_name)">Add Video</button>
+          </tr>                    
+        </tbody>      
+      </table>
+    </div>
+  </div>
+
+  <div ng-show="addImage === true">
+    <!-- show files -->
+    <div class="row" style="padding-top:50px;">
+      <div class="col-md-7 col-md-offset-3">
+        <p style="font-size:40px; padding-bottom:20px;">Files</p>
+      </div>
+    </div>
+
+    <div class="container col-md-offset-2">
+      <table class = "table">
+        <thead>
+          <tr>
+            <th class="col-md-2"> File </th>
+            <th class="col-md-2"> Download </th>
+          </tr>
+        <thead>
+
+        <tbody>
+          <tr ng-repeat="file in files">
+            <td> File {{ $index+1 }}
+            <td> <a href="/download/{{ file }}"><button type="button" class="btn btn-info">Download</button></a> </td>
+          </tr>                    
+        </tbody>      
+      </table>
+    </div>
+  </div>
+
+      
+
+</body>
+
+</html>

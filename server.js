@@ -20,7 +20,7 @@ require('./models/Sculptures.js');
 //var mongodbURI = "mongodb://localhost:27017"
 var mongodbURI = "mongodb://admin:asdf@ds019698.mlab.com:19698/urbanaparkstest"
 mongoose.connect(mongodbURI);
-console.log("Databse Connected");
+console.log("Database Connected");
 
 /* Server Config */
 var app = express();

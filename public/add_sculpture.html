@@ -11,7 +11,7 @@ var app = angular.module('addSculpture', []);
 
 app.controller('AddSculptCtrl', function ($scope, $http) {
   
-  $scope.name = "";
+  $scope.sculpture_name = "";
   $scope.video = "";
   $scope.image = "";
   $scope.audio = "";
@@ -23,7 +23,7 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
   $scope.submit = function(){
     var sculpture = { 
-              name: $scope.name, 
+              sculpture_name: $scope.sculpture_name, 
     				  video: $scope.video,
     				  image: $scope.image,
     				  audio: $scope.audio,
@@ -61,8 +61,8 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
           <div class="input-group">
             <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">name</span>
         	<input type="text" class="form-control" aria-describedby="basic-addon2" 
-	        	placeholder="username" 
-	        	ng-model="username">
+	        	placeholder="sculpture_name" 
+	        	ng-model="sculpture_name">
       	  </div>
         </div>
 
