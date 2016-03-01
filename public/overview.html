@@ -73,19 +73,17 @@
       <table class = "table">
         <thead>
           <tr>
-            <th class="col-md-2"> Marker </th>
-            <th class="col-md-2"> Name </th>
-            <th class="col-md-2"> Artist </th>
-            <th calss="col-md-2"> </th>
+            <th class="col-md-2"></th>
+            <th class="col-md-5"></th>
+            <th calss="col-md-0"></th>
           </tr>
         <thead>
 
         <tbody>
-          <tr ng-repeat="sculpture in sculptures">
+          <tr ng-repeat="sculpture in sculptures" class='clickable-row' data-href='detail.html'>
             <td style="padding-top:12px;"> </td>
-            <td style="padding-top:12px;"> {{ sculpture.sculpture_name }} </td>
-            <td style="padding-top:12px;"> {{ sculpture.artist }} </td>
-            <td style="padding-top:12px;"> <img src="img/Sculptures/Fluke.jpg" alt="" height=150 width=150></img> </td>
+            <td style="padding-top:85px;"> {{ sculpture.sculpture_name }} </td>
+            <td style="padding-top:0px; padding-bottom:0px;"> <img src="img/Sculptures/Fluke.jpg" alt="" height=200 width=200></img> </td>
           </tr>                    
         </tbody>      
       </table>
