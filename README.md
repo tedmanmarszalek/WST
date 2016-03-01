@@ -2,7 +2,7 @@
 
  - Running on Node.js
 
- - "django server" in root directory to run on local server:
+ - "node server" in root directory to run on local server:
 
  		localhost:8080
  		
