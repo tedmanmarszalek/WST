@@ -11,6 +11,7 @@ var ip = process.env.IP || '10.128.18.238';
 
 /* Place Models Here */
 require('./models/Sculptures.js');
+require('./models/Files.js');
 
 /* Database Connection */
 //To login to mlab.com to see the data in the database:
@@ -40,8 +41,10 @@ app.set('view engine', 'html');
 
 /* Place Routes Here */
 var sculpture_router = require('./routes/Sculptures.js');
-app.use('/sculpture', sculpture_router)
+var upload_router = require('./routes/Uploads.js');
 
+app.use('/sculpture', sculpture_router)
+app.use('/upload', upload_router);
 
 // uncomment for local testing
 app.listen(port);

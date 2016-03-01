@@ -62,16 +62,17 @@
             <td style="padding-top:12px;"> {{ sculpture.sculpture_name }} </td>
             <td> 
               <form action="localhost:8080/upload" method="POST" enctype="multipart/form-data">
-                <div class="col-md-4 col-md-offset-1"> <div class="form-group"> <div class="input-group">
+                <div class="form-group"> <div class="input-group">
                  <label for="image">Add Image</label> <input type="file" name="image">
-                </div></div></div>
-                <div class="col-md-4 col-md-offset-1"> <div class="form-group"> <div class="input-group">
+                </div></div>
+                <div class="form-group"> <div class="input-group">
                  <label for="audio">Add Audio</label> <input type="file" name="audio">
-                </div></div></div>
-                <div class="col-md-4 col-md-offset-1"> <div class="form-group"> <div class="input-group">
+                </div></div>
+                <div class="form-group"> <div class="input-group">
                  <label for="file">Add Video</label> <input type="file" name="video">
-                </div></div></div>
-
+                </div></div>
+                <input type="hidden" name="sculpture_name" value="{{ sculpture.sculpture_name }}">
+                <p style="padding-top:12px;">
                 <input type="submit">
               </form>
           </tr>                    
