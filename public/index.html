@@ -1,12 +1,49 @@
 <html>
     <head>
     <title>Urbana Park District Tours</title>
-      <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.3.7/slick.css"/>
-      <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
-      <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
       <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
       <link rel="stylesheet" type="text/css" href="css/slick/slick.css">
       <link rel="stylesheet" type="text/css" href="css/slick/slick-theme.css">
+
+      <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="js/slick/slick.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+      
+      <script>
+
+        var app = angular.module('list_sculptures', []);
+
+        app.factory('sculptureListFactory', function($http){
+          var getData = function(){
+            return $http.get("/sculpture").then(function(result){
+              return result.data;
+            });  
+          }
+
+          return { getData: getData };
+        });
+
+        app.controller('SculptureListCtrl', function ($scope, sculptureListFactory) {
+      
+        $scope.sculptures = [];
+        $scope.addImage = false;
+
+        var sculpturePromise = sculptureListFactory.getData();
+
+        sculpturePromise.then(function(result) {
+          console.log("promise completed");
+          var data = result;
+
+          for(var i = 0; i < data.length; i++){
+            console.log("pushing" + data[i].sculpture_name + "to sculptures");
+            $scope.sculptures.push(data[i]); 
+          }
+        });
+        });
+
+      </script>
 
       <!-- Custom CSS -->
       <style>
@@ -15,9 +52,28 @@
           /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
         }
       </style>
+
+      <!-- Carousel -->
+      <script type="text/javascript">
+          $(document).ready(function(){
+              //$('.your-class').slick();
+              $('.carousel').slick({
+                  variableWidth: true,
+                  //dots: true,
+                  infinite: true,
+                  centerMode: true,
+                  centerPadding: '60px',
+                  slidesToShow: 3,
+                  slidesToScroll: 1,
+                  autoplay: true,
+                  autoplaySpeed: 800,
+              });
+          });
+      </script>
+
     </head>
 
-    <body style="background-color: white">
+    <body style="background-color: white" ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
 
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -43,39 +99,18 @@
       <br>
 
       <div class="col-lg-12 text-center"> 
-        <div class="container" id="welcome" name="welcome" style="border:1px solid grey; height:250px; width:400px;">
-          <p1 style="word-wrap: break-word;"> Welcome to the Wandell Sculpture Garden, open daily sunrise to sunset and free to the public. The garden opened in 1999. An initial gift from the Celia and Willet Wandell Family made it possible to install 10 sculptures that were on loan from the artist. Since then many others have helped the district purchase grow the collection. Most of the exhibits remain pieces that are on two-year loan from the artist and are available for purchase.
+        <div class="container" id="welcome" name="welcome" style="border:1px solid grey; height:335px; width:300px; overflow: auto">
+          <br>
+          Welcome to the Wandell Sculpture Garden, open daily sunrise to sunset and free to the public. The garden opened in 1999. An initial gift from the Celia and Willet Wandell Family made it possible to install 10 sculptures that were on loan from the artist. Since then many others have helped the district purchase grow the collection. Most of the exhibits remain pieces that are on two-year loan from the artist and are available for purchase.
           <br> <br>
-          This tour will help you explore each piece and learn more about the artists who created them. Just click start to begin.</p1>      
+          This tour will help you explore each piece and learn more about the artists who created them. Just click start to begin.  
+          <br>   
         </div> 
         <br>
-        <a href="overview.html"><button type="button"class="btn btn-success" style="width:400px">Start Tour</button></a>
+        <a href="overview.html"><button type="button"class="btn btn-success" style="width:300px">Start Tour</button></a>
       </div>
 
-      <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-      <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-      <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.3.7/slick.min.js"></script>
-      <script type="text/javascript" src="js/slick/slick.js"></script>
-      <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
-      <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
-      
-      <script type="text/javascript">
-          $(document).ready(function(){
-              //$('.your-class').slick();
 
-              $('.carousel').slick({
-                  variableWidth: true,
-                  dots: true,
-                  infinite: true,
-                  centerMode: true,
-                  centerPadding: '60px',
-                  slidesToShow: 3,
-                  slidesToScroll: 1,
-                  autoplay: true,
-                  autoplaySpeed: 800,
-              });
-          });
-      </script>
 
     <footer> </footer>
 
