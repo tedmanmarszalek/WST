@@ -1,4 +1,4 @@
-## Urbana Parks Tour web application
+## Urbana Parks Tour Web Application
 
  - Running on Node.js
 
