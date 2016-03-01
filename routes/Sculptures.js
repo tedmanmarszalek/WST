@@ -10,8 +10,6 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
 
-	console.log("post received");
-
 	var sculpture_object = {
 		name: req.body.name,
 		video: req.body.video,
@@ -24,8 +22,6 @@ router.post('/', function(req, res){
 	}
 
 	var sculpture = new Sculpture(sculpture_object);
-
-	console.log("object created");
 
 	sculpture.save(function(err, result){
 		if(err){

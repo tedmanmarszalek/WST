@@ -13,9 +13,14 @@ var ip = process.env.IP || '10.128.18.238';
 require('./models/Sculptures.js');
 
 /* Database Connection */
-var mongodbURI = "mongodb://localhost:27017"
-//var mongodbURI = "mongodb://champfox:asdf@ds063140.mlab.com:63140/testdb"
+//To login to mlab.com to see the data in the database:
+//Username: urbanaparks
+//Password: UPD123
+
+//var mongodbURI = "mongodb://localhost:27017"
+var mongodbURI = "mongodb://admin:asdf@ds019698.mlab.com:19698/urbanaparkstest"
 mongoose.connect(mongodbURI);
+console.log("Databse Connected");
 
 /* Server Config */
 var app = express();
