@@ -7,8 +7,9 @@ var SculptureSchema = new Schema({
 	video: {type: String},
 	image: {type: String},
 	audio: {type: String},
-	active: {type: String},
-	coordinates: {type: String},
+	active: {type: Boolean},
+	coordinates_latitude: {type: Number},
+	coordinates_longitude: {type: Number},
 	artist: {type: String},
 	artist_statement: {type: String},
 }, {versionKey: false});
