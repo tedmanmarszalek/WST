@@ -61,7 +61,7 @@
           <tr ng-repeat="sculpture in sculptures">
             <td style="padding-top:12px;"> {{ sculpture.sculpture_name }} </td>
             <td> 
-              <form action="localhost:8080/upload" method="POST" enctype="multipart/form-data">
+              <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
                 <div class="form-group"> <div class="input-group">
                  <label for="image">Add Image</label> <input type="file" name="image">
                 </div></div>
