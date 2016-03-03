@@ -22,7 +22,8 @@ router.post('/', function(req, res){
 		image: req.body.image,
 		audio: req.body.audio,
 		active: req.body.active,
-		coordinates: req.body.coordinates,
+		coordinates_latitude: req.body.coordinates_latitude,
+		coordinates_longitude: req.body.coordinates_longitude,
 		artist: req.body.artist,
 		artist_statement: req.body.artist_statement
 	}
