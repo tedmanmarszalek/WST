@@ -15,8 +15,9 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
   $scope.video = "";
   $scope.image = "";
   $scope.audio = "";
-  $scope.active = "";
-  $scope.coordinates = "";
+  $scope.active = true;
+  $scope.coordinates_latitude;
+  $scope.coordinates_longitude;
   $scope.artist = "";
   $scope.artist_statement = "";
   $scope.message  = "";
@@ -28,14 +29,15 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
     				  image: $scope.image,
     				  audio: $scope.audio,
     				  active: $scope.active,
-    				  coordinates: $scope.coordinates,
+    				  coordinates_latitude: $scope.coordinates_latitude,
+              coordinates_longitude: $scope.coordinates_longitude,
     				  artist: $scope.artist,
     				  artist_statement: $scope.artist_statement
     				};
 
     $http.post('/sculpture', sculpture).then(function successCallback(response){
         if(response.data.success === true){
-		    	$scope.message = "success";
+		    	$scope.message = "Sculpture Added";
         }
         else {
           $scope.message = "error";
@@ -50,16 +52,18 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
 <body ng-app="addSculpture" ng-controller="AddSculptCtrl" style="overflow-x:hidden">
 
-    <p style="font-size:60px; font-family:Oxygen;">
-    	<b>Add Sculpture</b>
-    </p>
+    <div class="row" style="padding-top:50px;">
+        <div class="col-md-7 col-md-offset-2">
+      <p style="font-size:40px; padding-bottom:20px;">Add Sculpture</p>
+      </div>
+    </div>
 
   <form ng-submit="submit()"
-    <div class="col-md-4 col-md-offset-1">
+    <div class="col-md-8 col-md-offset-2">
 
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">name</span>
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">Name</span>
         	<input type="text" class="form-control" aria-describedby="basic-addon2" 
 	        	placeholder="sculpture_name" 
 	        	ng-model="sculpture_name">
@@ -68,52 +72,34 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">video</span>
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">Status</span>
+            <label class="radio-inline" style="padding-left:40px;"><input type="radio" ng-model="active" ng-value="true">Active</label>
+            <label class="radio-inline"><input type="radio" ng-model="active" ng-value="false">Inactive</label>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">Latitude(North/South)</span>
         	<input type="text" class="form-control" aria-describedby="basic-addon2" 
-	        	placeholder="video" 
-	        	ng-model="video">
+	        	placeholder="132" 
+	        	ng-model="coordinates_latitude">
       	  </div>
         </div>
 
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">image</span>
-        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
-	        	placeholder="image" 
-	        	ng-model="image">
-      	  </div>
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">Longitude(East/West)</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon2" 
+            placeholder="108" 
+            ng-model="coordinates_longitude">
+          </div>
         </div>
 
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">audio</span>
-        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
-	        	placeholder="audio" 
-	        	ng-model="audio">
-      	  </div>
-        </div>
-
-        <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">active</span>
-        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
-	        	placeholder="active" 
-	        	ng-model="active">
-      	  </div>
-        </div>
-
-        <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">coordinates</span>
-        	<input type="text" class="form-control" aria-describedby="basic-addon2" 
-	        	placeholder="coordinates" 
-	        	ng-model="coordinates">
-      	  </div>
-        </div>
-
-        <div class="form-group">
-          <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">artist</span>
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">Artist</span>
         	<input type="text" class="form-control" aria-describedby="basic-addon2" 
 	        	placeholder="artist" 
 	        	ng-model="artist">
@@ -122,17 +108,31 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">artist statement</span>
+            <span class="input-group-addon" id="sizing-addon2" style="padding-right:60px;">Artist Statement</span>
         	<input type="text" class="form-control" aria-describedby="basic-addon2" 
-	        	placeholder="artist_statement" 
+	        	placeholder="Statement" 
 	        	ng-model="artist_statement">
       	  </div>
         </div>
 
+        <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="form-group"> <div class="input-group">
+           <label for="image">Add Image</label> <input type="file" name="image">
+          </div></div>
+          <div class="form-group"> <div class="input-group">
+           <label for="audio">Add Audio</label> <input type="file" name="audio">
+          </div></div>
+          <div class="form-group"> <div class="input-group">
+           <label for="file">Add Video</label> <input type="file" name="video">
+          </div></div>
+
+          <input type="hidden" name="sculpture_name" value="{{ name }}">
+          <p style="padding-top:12px;">
+          <button type="submit" class="btn btn-primary" ng-click"submit()">Submit</button>
+        </form>
+
     <p style="font-size:20px; padding-top:10px; color:red;"> {{ message }} </p>
 
-   </form>
 </body>
 </html>
