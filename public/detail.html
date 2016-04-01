@@ -18,15 +18,15 @@
           center: {lat: 40.079874, lng: -88.204610},
           zoom: 17
         });
-      var marker = new google.maps.Marker({
-        position: map.getCenter(),
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 10
-        },
-        draggable: false,
-        map: map
-      });
+        var marker = new google.maps.Marker({
+          position: map.getCenter(),
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10
+          },
+          draggable: false,
+          map: map
+        });
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
