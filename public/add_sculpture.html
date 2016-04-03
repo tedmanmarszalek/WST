@@ -21,6 +21,8 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
   $scope.artist = "";
   $scope.artist_statement = "";
   $scope.message  = "";
+  $scope.uploadVideo = true;
+  $scope.videoLink = "";
 
   $scope.submit = function(){
     var sculpture = { 
@@ -37,7 +39,7 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
     $http.post('/sculpture', sculpture).then(function successCallback(response){
         if(response.data.success === true){
-		    	$scope.message = "Sculpture Added";
+         	$scope.message = "Sculpture Added";
         }
         else {
           $scope.message = "error";
@@ -58,7 +60,6 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
       </div>
     </div>
 
-  <form ng-submit="submit()"
     <div class="col-md-8 col-md-offset-2">
 
         <div class="form-group">
@@ -115,24 +116,45 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
       	  </div>
         </div>
 
-        <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+      <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
 
-          <div class="form-group"> <div class="input-group">
-           <label for="image">Add Image</label> <input type="file" name="image">
-          </div></div>
-          <div class="form-group"> <div class="input-group">
-           <label for="audio">Add Audio</label> <input type="file" name="audio">
-          </div></div>
-          <div class="form-group"> <div class="input-group">
-           <label for="file">Add Video</label> <input type="file" name="video">
-          </div></div>
+            <div class="form-group"style="padding-top:10px;"> <div class="input-group">
+             <label for="image">Add Image</label> <input type="file" name="image">
+            </div></div>
+            <div class="form-group"style="padding-top:10px;"> <div class="input-group">
+             <label for="audio">Add Audio</label> <input type="file" name="audio">
+            </div></div>
 
-          <input type="hidden" name="sculpture_name" value="{{ name }}">
-          <p style="padding-top:12px;">
-          <button type="submit" class="btn btn-primary" ng-click"submit()">Submit</button>
-        </form>
+            <div style="padding-top:10px;"><strong> Add Video </strong></div>
+
+            <div class="form-group" style="padding-top:5px;">
+              <div class="input-group">
+              <label class="col-sm-2">Type</label>
+              <label class="radio-inline" style="padding-left:50px;">
+              <input type="radio" ng-model="uploadVideo" ng-value="true">Upload</label>
+              <label class="radio-inline"> 
+              <input type="radio" ng-model="uploadVideo" ng-value="false">Link</label>
+              </div></div>
+
+            <div style="padding-top:5px;"></div>
+            <div ng-show="uploadVideo" >
+            <div class="form-group" > <div class="input-group">
+            <input type="file" name="video">
+            </div></div></div>
+        
+            <div ng-hide="uploadVideo">
+            <div class="form-group" > <div class="input-group">
+            <input type="text" class="form-control" id="videoLink" ng-model="videoLink" placeholder="Video Link">
+            </div></div></div>
+
+            <input type="hidden" name="sculpture_name" value="{{ sculpture_name }}">
+            <p style="padding-top:12px;">
+            <button type="submit" class="btn btn-primary" ng-click="submit()">Submit</button>
+    </form>
 
     <p style="font-size:20px; padding-top:10px; color:red;"> {{ message }} </p>
+
+    </div>
 
 </body>
 </html>

@@ -10,8 +10,6 @@ var jwt = require('jsonwebtoken');
 var port = process.env.PORT || 8080;
 var ip = process.env.IP || '10.128.18.238';
 
-/* Setup JSON Web Token */
-var secret = 'UPD';
 
 /* Place Models Here */
 require('./models/Sculptures.js');
@@ -35,7 +33,6 @@ var app = express();
 // app.use('/', express.static('../frontend'))
 // app.use(favicon(path.join('../frontend', 'favicon.ico')));
 
-app.set('secretvar', secret);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -49,10 +46,13 @@ app.set('view engine', 'html');
 var sculpture_router = require('./routes/Sculptures.js');
 var upload_router = require('./routes/Uploads.js');
 var auth_router = require('./routes/Auth.js');
+var setup_router = require('./routes/Setup.js');
 
 app.use('/auth', auth_router)
 app.use('/sculpture', sculpture_router)
 app.use('/upload', upload_router);
+
+app.use('/setup', setup_router);
 
 // uncomment for local testing
 app.listen(port);

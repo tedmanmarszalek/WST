@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+<script>
+var app = angular.module('login', []);
+
+app.controller('LoginCtrl', function ($scope, $http) {
+  
+  $scope.sculpture_name = "";
+  $scope.video = "";
+  $scope.image = "";
+  $scope.audio = "";
+  $scope.active = true;
+  $scope.coordinates_latitude;
+  $scope.coordinates_longitude;
+  $scope.artist = "";
+  $scope.artist_statement = "";
+  $scope.message  = "";
+  $scope.uploadVideo = true;
+  $scope.videoLink = "";
+
+  $scope.submit = function(){
+    var user = { 
+                name: 'updadmin',
+                password: 'updadmin'
+               };
+
+    $http.post('/auth', user).then(function successCallback(response){
+
+    }, function errorCallback(response){
+      console.log("error");
+    });
+  }
+});
+</script>
+
+<body ng-app="login" ng-controller="LoginCtrl" style="overflow-x:hidden">
+
+    <div class="row" style="padding-top:50px;">
+        <div class="col-md-7 col-md-offset-2">
+      <p style="font-size:40px; padding-bottom:20px;">Login</p>
+      </div>
+    </div>
+
+  <form ng-submit="submit()"
+    <div class="col-md-8 col-md-offset-2">
+          <button type="submit" class="btn btn-primary" ng-click"submit()">Submit</button>
+  </form>
+
+
+</body>
+</html>
