@@ -24,6 +24,7 @@
       
       $scope.sculptures = [];
       $scope.searchString = "";
+      $scope.message = "";
 
       var sculpturePromise = sculptureListFactory.getData();
 
@@ -33,6 +34,22 @@
           $scope.sculptures.push(data[i]); 
         }
       });
+
+    $scope.delete = function(sculpture_name){
+      console.log("function entered");
+      console.log(sculpture_name);
+      $http.post('/upload/delete', sculpture_name).then(function successCallback(response){
+          if(response.data.success === true){
+            $scope.message = "Sculpture Deleted";
+          }
+          else {
+            $scope.message = "error";
+          }
+
+      }, function errorCallback(response){
+        console.log("error");
+      });
+    }
 
     });
 
@@ -90,7 +107,9 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" ng-click"submit()">Submit</button>
+                <button type="submit" class="btn btn-primary" ng-click"=submit()">Submit</button>
+                <button type="submit" class="btn btn-primary" ng-click"=delete( {{sculpture.sculpture_name}} )">Delete</button>
+
               </form>
 
 

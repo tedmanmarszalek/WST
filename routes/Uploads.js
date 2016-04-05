@@ -27,6 +27,19 @@ router.get('/', function(req, res){
 
 var fields = upload.fields([{name: 'image', maxcount: 1}, {name: 'audio', maxcount: 1}, {name: 'video', maxcount: 1}]);
 
+router.post('/delete', function(req, res, next){
+	console.log("entered /delete");
+	Sculpture.remove({ sculpture_name: req.body.sculpture_name }, function(err) {
+		if(err){
+			console.log(err);
+			res.send(err);
+		}
+		else{
+			console.log("deleted");
+		}
+	});
+});
+
 router.post('/', fields, function(req, res, next){
 	var sculpture_name = req.body.sculpture_name;
 
@@ -120,5 +133,7 @@ router.post('/', fields, function(req, res, next){
 	res.send("OK");
 
 });
+
+
 
 module.exports = router;
