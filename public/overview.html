@@ -60,6 +60,29 @@
         mapTypeControl: false,
         streetViewControl: false
       });  
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = function() {
+        if(xmlHttp.readyState == 4 && xmlHttp.status == 200) 
+        {
+          var myArr = JSON.parse(xmlHttp.responseText);
+          addMarkers(myArr);
+        }
+      };
+      xmlHttp.open("GET", "/sculpture", true);
+      xmlHttp.send();
+      function addMarkers(arr){
+        for(i = 0; i < arr.length; i++) {
+          if(arr[i].active){
+            console.log(arr[i].image)
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
+              icon: 'https://cdn2.iconfinder.com/data/icons/function_icon_set/circle_green.png',
+              draggable: false,
+              map: map
+            });
+          }
+        }
+      }
       var person = null;
       function autoUpdateLocation() {
         if (navigator.geolocation) {
@@ -84,26 +107,6 @@
         }
         setTimeout(autoUpdateLocation, 5000);
       }
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.onreadystatechange = function() {
-        if(xmlHttp.readyState == 4 && xmlHttp.status == 200) 
-        {
-          var myArr = JSON.parse(xmlHttp.responseText);
-          addMarkers(myArr);
-        }
-      };
-      xmlHttp.open("GET", "/sculpture", true);
-      xmlHttp.send();
-      function addMarkers(arr){
-        for(i = 0; i < arr.length; i++) {
-          var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
-            icon: 'https://cdn2.iconfinder.com/data/icons/function_icon_set/circle_green.png',
-            draggable: false,
-            map: map
-        });
-        }
-      }
       autoUpdateLocation(); 
     }
   </script>
@@ -112,7 +115,7 @@
   <div id="map"></div>
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
       async defer></script>
-  <div class="container" style="height:350px; overflow:auto; width:100%;">
+  <div class="container" style="height:800px; overflow:auto; width:100%;">
       <table class = "table" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
         <thead>
           <tr>
@@ -126,7 +129,7 @@
           <tr ng-repeat="sculpture in sculptures" onclick="document.location = 'detail.html';">
             <td style="padding-top:12px;"> </td>
             <td style="padding-top:85px;"> {{ sculpture.sculpture_name }} </td>
-            <td style="padding-top:0px; padding-bottom:0px;"> <img src="./uploads/e23ec9a19a921434fbcab6b9d7f9c8e01459473197542.jpg" alt="" height=200 width=200></img> </td>
+            <td style="padding-top:0px; padding-bottom:0px;"><img src="{{ sculpture.image }}" alt="" height=200 width=200></img> </td>
           </tr>                    
         </tbody>      
       </table>

@@ -41,7 +41,7 @@ router.post('/', fields, function(req, res, next){
 	if(image_exists === true){
 		var image = {
 			file_name: req.files['image'][0].filename,
-			path: req.files['image'][0].destination + req.files['image'][0].filename,
+			path: "/uploads/" + req.files['image'][0].filename,
 			associated_sculpture: sculpture_name,
 			type: "image"
 		};
@@ -51,7 +51,7 @@ router.post('/', fields, function(req, res, next){
 	if(audio_exists === true){
 		var audio = {
 			file_name: req.files['audio'][0].filename,
-			path: req.files['audio'][0].destination + req.files['audio'][0].filename,
+			path: "/uploads/" + req.files['audio'][0].filename,
 			associated_sculpture: sculpture_name,
 			type: "audio"
 		};
@@ -61,7 +61,7 @@ router.post('/', fields, function(req, res, next){
 	if(video_exists === true){
 		var video = {
 			file_name: req.files['video'][0].filename,
-			path: req.files['video'][0].destination + req.files['video'][0].filename,
+			path: "/uploads/" + req.files['video'][0].filename,
 			associated_sculpture: sculpture_name,
 			type: "video"
 		};
