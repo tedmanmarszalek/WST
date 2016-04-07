@@ -92,6 +92,8 @@
 </head>
 <body ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
   <div id="map"></div>
+  <img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications.png"></img>
+  <img style="position:absolute; width:100px; height:100px; top:30px; left:30px" src="/img/Icons/GoBackToList.png" onclick="document.location = 'overview.html';"></img>
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
       async defer></script>
   <div class="container" style="height:200px; overflow:auto; width:100%;">

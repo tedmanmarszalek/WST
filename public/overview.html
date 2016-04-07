@@ -118,6 +118,8 @@
 </head>
 <body ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
   <div id="map"></div>
+  <img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications.png"></img>
+  <img style="position:absolute; width:100px; height:100px; top:30px; left:30px" src="/img/Icons/HomePageOnMapView.png" onclick="document.location = '/';"></img>
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
       async defer></script>
   <div class="container" style="height:800px; overflow:auto; width:100%;">
@@ -133,7 +135,7 @@
         <tbody>
           <tr ng-repeat="sculpture in sculptures">
             <td style="padding-top:12px; align:center; vertical-align:middle;" onclick="document.location = 'detail.html';"><img src="/img/Icons/Circles/BlackBig/{{ sculpture.number }}BlackBig.png" alt="" height=50 width=50></img></td>
-            <td id="{{sculpture.number}}" style="padding-top:85px;" align="left" onclick="sessionStorage.name=this.textContent; sessionStorage.number=this.id; document.location = 'detail.html';"> <FONT COLOR=BLACK FACE="Geneva, Arial" SIZE=7>{{sculpture.sculpture_name}}</FONT></td>
+            <td id="{{sculpture.number}}" style="padding-top:67px;" align="left" onclick="sessionStorage.name=this.textContent; sessionStorage.number=this.id; document.location = 'detail.html';"> <FONT COLOR=BLACK FACE="Geneva, Arial" SIZE=7>{{sculpture.sculpture_name}}</FONT></td>
             <td style="padding-top:0px; padding-bottom:0px;" align="right" onclick="document.location = 'detail.html';"><img src="{{ sculpture.image }}" alt="" height=200 width=200></img> </td>
           </tr>                    
         </tbody>      
