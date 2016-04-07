@@ -48,7 +48,8 @@
 
         for(var i = 0; i < data.length; i++){
           console.log("pushing" + data[i].sculpture_name + "to sculptures");
-          $scope.sculptures.push(data[i]); 
+          var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: i+1}
+          $scope.sculptures.push(newSculpture); 
         }
       });
     });
@@ -73,10 +74,10 @@
       function addMarkers(arr){
         for(i = 0; i < arr.length; i++) {
           if(arr[i].active){
-            console.log(arr[i].image)
+            iconNum = i+1
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
-              icon: 'https://cdn2.iconfinder.com/data/icons/function_icon_set/circle_green.png',
+              icon: '/img/Icons/Circles/BlackSmall/' + iconNum + "BlackSmall.png",
               draggable: false,
               map: map
             });
@@ -119,17 +120,17 @@
       <table class = "table" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
         <thead>
           <tr>
-            <th class="col-md-5 col-xs-3"></th>
+            <th class="col-md-1 col-xs-1"></th>
             <th class="col-md-8 col-xs-7"></th>
             <th class="col-md-0 col-xs-0"></th>
           </tr>
         <thead>
 
         <tbody>
-          <tr ng-repeat="sculpture in sculptures" onclick="document.location = 'detail.html';">
-            <td style="padding-top:12px;"> </td>
-            <td style="padding-top:85px;"> {{ sculpture.sculpture_name }} </td>
-            <td style="padding-top:0px; padding-bottom:0px;"><img src="{{ sculpture.image }}" alt="" height=200 width=200></img> </td>
+          <tr ng-repeat="sculpture in sculptures">
+            <td style="padding-top:12px; align:center; vertical-align:middle;" onclick="document.location = 'detail.html';"><img src="/img/Icons/Circles/BlackBig/{{ sculpture.number }}BlackBig.png" alt="" height=50 width=50></img></td>
+            <td id="{{sculpture.number}}" style="padding-top:85px;" align="left" onclick="sessionStorage.name=this.textContent; sessionStorage.number=this.id; document.location = 'detail.html';"> <FONT COLOR=BLACK FACE="Geneva, Arial" SIZE=7>{{sculpture.sculpture_name}}</FONT></td>
+            <td style="padding-top:0px; padding-bottom:0px;" align="right" onclick="document.location = 'detail.html';"><img src="{{ sculpture.image }}" alt="" height=200 width=200></img> </td>
           </tr>                    
         </tbody>      
       </table>
