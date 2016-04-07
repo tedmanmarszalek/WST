@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var jwt = require('jsonwebtoken');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -10,10 +10,8 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
 
-	console.log("post received");
-
 	  User.findOne({
-	    name: req.body.name
+	    name: req.body.username
 	  }, function(err, user) {
 
 	    if (err) throw err;
@@ -29,7 +27,7 @@ router.post('/', function(req, res){
 
 	        // if user is found and password is right
 	        // create a token
-	        var token = jwt.sign(user, app.get('secretvar'), {
+	        var token = jwt.sign(user, 'UPDSECRET', {
 	          expiresInMinutes: 1440 // expires in 24 hours
 	        });
 

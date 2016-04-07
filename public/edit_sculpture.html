@@ -42,7 +42,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
   sculpturePromise.then(function(result) {
     var data = result;
     for(var i = 0; i < data.length; i++){
-      if(data[i].sculpture_name = edit_name){
+      if(data[i].sculpture_name === edit_name){
         sculpture = data[i];
         break;
       }
@@ -52,6 +52,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
       $scope.sculpture_name = 'Error: Not Found';
     }
     else{
+      document.title = "Editing " + sculpture.sculpture_name;
       $scope.sculpture_name = sculpture.sculpture_name;
       $scope.video = sculpture.video;
       $scope.image = sculpture.image;
@@ -108,23 +109,23 @@ app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
         </div>
 
         <div class="form-group">
-          <label for="name">Latitude</label>
-          <input class="form-control" id="name" type="text" ng-model="coordinates_latitude">
+          <label for="latitude">Latitude</label>
+          <input class="form-control" id="latitude" type="text" ng-model="coordinates_latitude">
         </div>
 
         <div class="form-group">
-          <label for="name">Longitude</label>
-          <input class="form-control" id="name" type="text" ng-model="coordinates_longitude">
+          <label for="Longitude">Longitude</label>
+          <input class="form-control" id="Longitude" type="text" ng-model="coordinates_longitude">
         </div>
 
         <div class="form-group">
-          <label for="name">Artist</label>
-          <input class="form-control" id="name" type="text" ng-model="artist">
+          <label for="Artist">Artist</label>
+          <input class="form-control" id="Artist" type="text" ng-model="artist">
         </div>
 
         <div class="form-group">
-          <label for="name">Artist Statement</label>
-          <input class="form-control" id="name" type="text" ng-model="artist_statement">
+          <label for="Statement">Artist Statement</label>
+          <input class="form-control" id="Statement" type="text" ng-model="artist_statement">
         </div>
 
         <div class="form-group">

@@ -18,6 +18,9 @@ router.post('/', function(req, res){
 
 	var sculpture_object = {
 		sculpture_name: req.body.sculpture_name,
+		video: req.body.video,
+		audio: req.body.audio,
+		image: req.body.image,
 		active: req.body.active,
 		coordinates_latitude: req.body.coordinates_latitude,
 		coordinates_longitude: req.body.coordinates_longitude,
@@ -30,6 +33,9 @@ router.post('/', function(req, res){
 	//Create a new entry if no matching name found, otherwise update existing one
 	var conditions = {sculpture_name:req.body.sculpture_name};
 	var update = {$set: { active:req.body.active, 
+			video: req.body.video,
+			image: req.body.image,
+			audio: req.body.audio,
 			coordinates_latitude: req.body.coordinates_latitude,
 			coordinates_longitude: req.body.coordinates_longitude,
 			artist: req.body.artist,
