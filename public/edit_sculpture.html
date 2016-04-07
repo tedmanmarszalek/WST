@@ -9,9 +9,21 @@
 <script>
 var app = angular.module('addSculpture', []);
 
-app.controller('AddSculptCtrl', function ($scope, $http) {
+    app.factory('sculptureListFactory', function($http){
+      var getData = function(){
+        return $http.get("/sculpture").then(function(result){
+          return result.data;
+        });  
+      }
+
+      return { getData: getData };
+    });
+
+
+app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
   
-  $scope.sculpture_name = "";
+  var sculpture;
+  $scope.sculpture_name = "Loading...";
   $scope.video = "";
   $scope.image = "";
   $scope.audio = "";
@@ -24,22 +36,50 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
   $scope.uploadVideo = true;
   $scope.videoLink = "";
 
+  var sculpturePromise = sculptureListFactory.getData();
+  var edit_name = sessionStorage.getItem('sculptureToEdit');
+
+  sculpturePromise.then(function(result) {
+    var data = result;
+    for(var i = 0; i < data.length; i++){
+      if(data[i].sculpture_name = edit_name){
+        sculpture = data[i];
+        break;
+      }
+    }
+
+    if(sculpture === null){
+      $scope.sculpture_name = 'Error: Not Found';
+    }
+    else{
+      $scope.sculpture_name = sculpture.sculpture_name;
+      $scope.video = sculpture.video;
+      $scope.image = sculpture.image;
+      $scope.audio = sculpture.audio;
+      $scope.active = sculpture.active;
+      $scope.coordinates_latitude = sculpture.coordinates_latitude;
+      $scope.coordinates_longitude = sculpture.coordinates_longitude;
+      $scope.artist = sculpture.artist;
+      $scope.artist_statement = sculpture.artist_statement;
+    }
+  });
+
   $scope.submit = function(){
     var sculpture = { 
               sculpture_name: $scope.sculpture_name, 
-    				  video: $scope.video,
-    				  image: $scope.image,
-    				  audio: $scope.audio,
-    				  active: $scope.active,
-    				  coordinates_latitude: $scope.coordinates_latitude,
+              video: $scope.video,
+              image: $scope.image,
+              audio: $scope.audio,
+              active: $scope.active,
+              coordinates_latitude: $scope.coordinates_latitude,
               coordinates_longitude: $scope.coordinates_longitude,
-    				  artist: $scope.artist,
-    				  artist_statement: $scope.artist_statement
-    				};
+              artist: $scope.artist,
+              artist_statement: $scope.artist_statement
+            };
 
     $http.post('/sculpture', sculpture).then(function successCallback(response){
         if(response.data.success === true){
-         	$scope.message = "Sculpture Added";
+          $scope.message = "Sculpture Added";
         }
         else {
           $scope.message = "error";
@@ -56,7 +96,7 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
     <div class="row" style="padding-top:50px;">
         <div class="col-md-7 col-md-offset-2">
-      <p style="font-size:40px; padding-bottom:20px;">Add Sculpture</p>
+      <p style="font-size:40px; padding-bottom:20px;">Editing <b>{{sculpture_name}}</b> </p>
       </div>
     </div>
 
@@ -95,7 +135,7 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
           </div>
         </div>
 
-      <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+         <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
 
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
              <label for="image">Add Image</label> <input type="file" name="image">

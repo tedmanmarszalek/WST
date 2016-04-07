@@ -18,9 +18,6 @@ router.post('/', function(req, res){
 
 	var sculpture_object = {
 		sculpture_name: req.body.sculpture_name,
-		video: req.body.video,
-		image: req.body.image,
-		audio: req.body.audio,
 		active: req.body.active,
 		coordinates_latitude: req.body.coordinates_latitude,
 		coordinates_longitude: req.body.coordinates_longitude,
@@ -30,19 +27,32 @@ router.post('/', function(req, res){
 
 	var sculpture = new Sculpture(sculpture_object);
 
-	sculpture.save(function(err, result){
-		if(err){
-			console.log(err);
-			res.send(err);
-		} else {
-			console.log(result);
-			console.log("Success");
-			res.json({
-				success: true,
-				msg: ""
-			})
+	//Create a new entry if no matching name found, otherwise update existing one
+	var conditions = {sculpture_name:req.body.sculpture_name};
+	var update = {$set: { active:req.body.active, 
+			coordinates_latitude: req.body.coordinates_latitude,
+			coordinates_longitude: req.body.coordinates_longitude,
+			artist: req.body.artist,
+			artist_statement: req.body.artist_statement}
+		};
+	var options = {upsert: true, new: true};
+
+	Sculpture.findOneAndUpdate(conditions, update, options,
+		function(err, result){
+			if(err){
+				console.log(result);
+				console.log(err);
+				res.send(err);
+			} else {
+				console.log(result);
+				console.log("Success");
+				res.json({
+					success: true,
+					msg: ""
+				})
+			}
 		}
-	})
-})
+	);
+});
 
 module.exports = router;
