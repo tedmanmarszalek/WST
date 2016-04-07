@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title> Add Sculpture </title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
@@ -64,27 +65,27 @@ app.controller('AddSculptCtrl', function ($scope, $http) {
 
         <div class="form-group">
           <label for="name">Name</label>
-          <input class="form-control" id="name" type="text" ng-model="sculpture_name">
+          <input class="form-control" id="name" type="text" ng-model="sculpture_name" placeholder="Sculpture Name">
         </div>
 
         <div class="form-group">
           <label for="name">Latitude</label>
-          <input class="form-control" id="name" type="text" ng-model="coordinates_latitude">
+          <input class="form-control" id="name" type="text" ng-model="coordinates_latitude" placeholder="40.02">
         </div>
 
         <div class="form-group">
           <label for="name">Longitude</label>
-          <input class="form-control" id="name" type="text" ng-model="coordinates_longitude">
+          <input class="form-control" id="name" type="text" ng-model="coordinates_longitude" placeholder="-88.02">
         </div>
 
         <div class="form-group">
           <label for="name">Artist</label>
-          <input class="form-control" id="name" type="text" ng-model="artist">
+          <input class="form-control" id="name" type="text" ng-model="artist" placeholder="Artist Name">
         </div>
 
         <div class="form-group">
           <label for="name">Artist Statement</label>
-          <input class="form-control" id="name" type="text" ng-model="artist_statement">
+          <input class="form-control" id="name" type="text" ng-model="artist_statement" placeholder="Artist Statement">
         </div>
 
         <div class="form-group">
