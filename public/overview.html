@@ -45,11 +45,14 @@
       sculpturePromise.then(function(result) {
         console.log("promise completed");
         var data = result;
-
+        iconNumber = 1;
         for(var i = 0; i < data.length; i++){
-          console.log("pushing" + data[i].sculpture_name + "to sculptures");
-          var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: i+1}
-          $scope.sculptures.push(newSculpture); 
+          if(data[i].active){
+            console.log("pushing" + data[i].sculpture_name + "to sculptures");
+            var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: iconNumber}
+            $scope.sculptures.push(newSculpture); 
+            iconNumber++;
+          }
         }
       });
     });
@@ -71,16 +74,17 @@
       };
       xmlHttp.open("GET", "/sculpture", true);
       xmlHttp.send();
+      iconNum = 1;
       function addMarkers(arr){
         for(i = 0; i < arr.length; i++) {
           if(arr[i].active){
-            iconNum = i+1
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
               icon: '/img/Icons/Circles/BlackSmall/' + iconNum + "BlackSmall.png",
               draggable: false,
               map: map
             });
+            iconNum++;
           }
         }
       }
