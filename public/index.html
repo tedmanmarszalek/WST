@@ -1,72 +1,19 @@
-<html>
+<html ng-app="list_sculptures">
     <head>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urbana Park District Tours</title>
+
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-      <link rel="stylesheet" type="text/css" href="css/slick/slick.css">
-      <link rel="stylesheet" type="text/css" href="css/slick/slick-theme.css">
-      <link rel="stylesheet" type="text/css" href="css/styles.css">
+      <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css">
+      <link rel="stylesheet" type="text/css" href="css/welcome_style.css">
 
-      <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-      <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-      <script src="js/bootstrap.js"></script>
-      <script type="text/javascript" src="js/slick/slick.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+      <script src="bower_components/angular/angular.js"></script>
+      <script src="bower_components/slick-carousel/slick/slick.js"></script>
+      <script src="bower_components/angular-slick/dist/slick.js"></script>
+      <script src="js/carousel.js"></script>
 
-      <script>
-
-        var app = angular.module('list_sculptures', []);
-
-        app.factory('sculptureListFactory', function($http){
-          var getData = function(){
-            return $http.get("/sculpture").then(function(result){
-              return result.data;
-            });  
-          }
-
-          return { getData: getData };
-        });
-
-        app.controller('SculptureListCtrl', function ($scope, sculptureListFactory) {
-      
-        $scope.sculptures = [];
-        $scope.addImage = false;
-
-        var sculpturePromise = sculptureListFactory.getData();
-
-        sculpturePromise.then(function(result) {
-          console.log("promise completed");
-          var data = result;
-
-          for(var i = 0; i < data.length; i++){
-            console.log("pushing" + data[i].sculpture_name + "to sculptures");
-            $scope.sculptures.push(data[i]); 
-          }
-        });
-        });
-
-      </script>
-
-      </style>
-
-      <!-- Carousel -->
-      <script type="text/javascript">
-          $(document).ready(function(){
-              $('.carousel').slick({
-                  variableWidth: true,
-                  infinite: true,
-                  arrows: false,
-                  centerMode: true,
-                  centerPadding: '60px',
-                  slidesToShow: 3,
-                  slidesToScroll: 1,
-                  autoplay: true,
-                  autoplaySpeed: 0,
-                  speed: 4000
-              });
-          });
-      </script>
 
     </head>
 
@@ -78,21 +25,25 @@
         </div>
       </div>
 
-      <div class="carousel">
-          <div><img src="img/Sculptures/Fluke.jpg" alt="" class="carousel-img"></div>
-          <div><img src="img/Sculptures/Niantic.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Resonance.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Balencia.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Niantic.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Balencia.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Resonance.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Niantic.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Balencia.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Position-I.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Niantic.jpg" alt=""  class="carousel-img"></div>
-          <div><img src="img/Sculptures/Marker.jpg" alt=""  class="carousel-img"></div>      
-      </div>
+      <slick autoplay="true"
+             slides-to-show="3"
+             slides-to-scroll="1"
+             autoplay-speed="0"
+             speed="4000"
+             touch-move="false"
+             center-mode="true"
+             variable-width="true"
+             arrows="false">
+             
+        <div ng-repeat="sculpture in sculptures">
 
+          <img src="{{sculpture.image}}" alt=""  class="carousel-img">
+
+        </div>
+
+      </slick>
+
+      <br>
       <br>
 
       <div class="col-lg-12 text-center"> 
