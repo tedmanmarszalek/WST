@@ -46,7 +46,7 @@
 
         if (confirm("Are you sure you want to delete?") == true) {
 
-          var sculptureToDelete = {sculpture_name: sculpture_name};
+          var sculptureToDelete = {sculpture_name: sculpture_name, token: sessionStorage.getItem('token')};
           $http.post('/upload/delete', sculptureToDelete).then(function successCallback(response){
           $window.location.reload();
               if(response.data.success === true){

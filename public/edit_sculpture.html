@@ -35,6 +35,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
   $scope.message  = "";
   $scope.uploadVideo = true;
   $scope.videoLink = "";
+  $scope.token = sessionStorage.getItem('token');
 
   var sculpturePromise = sculptureListFactory.getData();
   var edit_name = sessionStorage.getItem('sculptureToEdit');
@@ -75,7 +76,8 @@ app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
               coordinates_latitude: $scope.coordinates_latitude,
               coordinates_longitude: $scope.coordinates_longitude,
               artist: $scope.artist,
-              artist_statement: $scope.artist_statement
+              artist_statement: $scope.artist_statement,
+              token: sessionStorage.getItem('token')
             };
 
     $http.post('/sculpture', sculpture).then(function successCallback(response){
@@ -167,6 +169,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
             </div></div></div>
 
             <input type="hidden" name="sculpture_name" value="{{ sculpture_name }}">
+            <input type="hidden" name="token" value="{{ token }}">
             <p style="padding-top:12px;">
             <button type="submit" class="btn btn-primary" ng-click="submit()">Submit</button>
     </form>
