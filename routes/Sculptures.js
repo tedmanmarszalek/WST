@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 
 var mongoose = require('mongoose');
 var Sculpture = mongoose.model('Sculpture');
@@ -14,10 +15,14 @@ router.get('/', function(req, res){
   
 });
 
-router.post('/', function(req, res){
+router.post('/', function(req, res, next){
 	var token = req.body.token;
-
-	      		console.log("authenticated");
+	if (token) {
+	    // verifies secret and checks exp
+	    jwt.verify(token, 'UPDSECRET', function(err, decoded) {    
+	      if (err) {
+	        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+	      } else {
 	      		var sculpture_object = {
 					sculpture_name: req.body.sculpture_name,
 					video: req.body.video,
@@ -28,8 +33,8 @@ router.post('/', function(req, res){
 					coordinates_longitude: req.body.coordinates_longitude,
 					artist: req.body.artist,
 					artist_statement: req.body.artist_statement
-				}
-
+				};
+				console.log("Created new sculpture object");
 				var sculpture = new Sculpture(sculpture_object);
 
 				//Create a new entry if no matching name found, otherwise update existing one
@@ -45,7 +50,6 @@ router.post('/', function(req, res){
 					};
 				var options = {upsert: true, new: true};
 
-				console.log("about to enter findOneAndUpdate");
 				Sculpture.findOneAndUpdate(conditions, update, options,
 					function(err, result){
 						if(err){
@@ -57,10 +61,23 @@ router.post('/', function(req, res){
 							res.json({
 								success: true,
 								msg: ""
-							})
+							});
 						}
 					}
 				);
+
+	      }
+	    });
+
+	  } else {
+
+	    // if there is no token
+	    // return an error
+	    return res.status(403).send({ 
+	        success: false, 
+	        message: 'No token provided.' 
+	    });
+	  }
 });
 
 module.exports = router;
