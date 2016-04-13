@@ -10,8 +10,16 @@
 <script>
 var app = angular.module('addSculpture', []);
 
-app.controller('AddSculptCtrl', function ($scope, $http) {
+app.controller('AddSculptCtrl', function ($scope, $http, $window) {
   
+  var init = function () {
+    if(sessionStorage.getItem('token') === null){
+       $window.location = "login.html";
+    }
+  };
+
+  init();
+
   $scope.sculpture_name = "";
   $scope.video = "";
   $scope.image = "";

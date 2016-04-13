@@ -20,8 +20,16 @@ var app = angular.module('addSculpture', []);
     });
 
 
-app.controller('AddSculptCtrl', function ($scope, $http, sculptureListFactory) {
+app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListFactory) {
   
+  var init = function () {
+    if(sessionStorage.getItem('token') === null){
+       $window.location = "login.html";
+    }
+  };
+
+  init();
+
   var sculpture;
   $scope.sculpture_name = "Loading...";
   $scope.video = "";
