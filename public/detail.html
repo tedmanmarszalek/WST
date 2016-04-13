@@ -80,7 +80,7 @@
           if(arr[i].active && (" "+arr[i].sculpture_name) == sessionStorage.getItem('name')){
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
-              icon: '/img/Icons/Circles/BlueSmall/' + sessionStorage.getItem('number') + "BlueSmall.png",
+              icon: '/img/Icons/Circles/BlueBig/' + sessionStorage.getItem('number') + "BlueBig.png",
               draggable: false,
               map: map
             });
