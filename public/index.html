@@ -1,19 +1,34 @@
-<html ng-app="list_sculptures">
+<html>
     <head>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urbana Park District Tours</title>
-
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-      <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css">
+      <link rel="stylesheet" type="text/css" href="css/slick/slick.css">
+      <link rel="stylesheet" type="text/css" href="css/slick/slick-theme.css">
       <link rel="stylesheet" type="text/css" href="css/welcome_style.css">
 
-      <script src="bower_components/jquery/dist/jquery.js"></script>
-      <script src="bower_components/angular/angular.js"></script>
-      <script src="bower_components/slick-carousel/slick/slick.js"></script>
-      <script src="bower_components/angular-slick/dist/slick.js"></script>
-      <script src="js/carousel.js"></script>
+      <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+      <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+      <script src="js/bootstrap.js"></script>
+      <script type="text/javascript" src="js/slick/slick.js"></script>
 
+      <!-- Carousel -->
+      <script type="text/javascript">
+          $(document).ready(function(){
+              $('.carousel').slick({
+                  variableWidth: true,
+                  infinite: true,
+                  arrows: false,
+                  centerMode: true,
+                  centerPadding: '60px',
+                  slidesToShow: 3,
+                  slidesToScroll: 1,
+                  autoplay: true,
+                  autoplaySpeed: 0,
+                  speed: 4000
+              });
+          });
+      </script>
 
     </head>
 
@@ -25,25 +40,33 @@
         </div>
       </div>
 
-      <slick autoplay="true"
-             slides-to-show="3"
-             slides-to-scroll="1"
-             autoplay-speed="0"
-             speed="4000"
-             touch-move="false"
-             center-mode="true"
-             variable-width="true"
-             arrows="false">
-             
-        <div ng-repeat="sculpture in sculptures">
+      <div class="carousel">
+          <div><img src="img/Sculptures/Balencia.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Diamons-Are-Forever.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Early-Morning-Walk.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/El-Arairah.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Fathers-and-Sons.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Fluke.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Folk-Art.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Hamilton.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Here-and-There.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Is-It-Too-Late.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Marker.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Minimal-Response-III.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Molecular-Reflection.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Niantic.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Open.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Position-I.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Prairie-Buoy.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Resonance.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Southern-Passage.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Sunstruck.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Swift.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Tall-Ship-II.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Tango.jpg" alt="" class="carousel-img"></div>
+          <div><img src="img/Sculptures/Yikes.jpg" alt="" class="carousel-img"></div>
+      </div>
 
-          <img src="{{sculpture.image}}" alt=""  class="carousel-img">
-
-        </div>
-
-      </slick>
-
-      <br>
       <br>
 
       <div class="col-lg-12 text-center"> 
