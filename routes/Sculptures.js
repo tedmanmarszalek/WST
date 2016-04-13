@@ -17,13 +17,6 @@ router.get('/', function(req, res){
 router.post('/', function(req, res){
 	var token = req.body.token;
 
-	if (token) {
-
-	    // verifies secret and checks exp
-	    jwt.verify(token, 'UPDSECRET', function(err, decoded) {      
-	      if (err) {
-	        return res.json({ success: false, message: 'Failed to authenticate token.' });    
-	      } else {
 	      		console.log("authenticated");
 	      		var sculpture_object = {
 					sculpture_name: req.body.sculpture_name,
@@ -68,19 +61,6 @@ router.post('/', function(req, res){
 						}
 					}
 				);
-
-	      }
-	    });
-
-	  } else {
-
-	    // if there is no token
-	    // return an error
-	    return res.status(403).send({ 
-	        success: false, 
-	        message: 'No token provided.' 
-	    });
-	  }
 });
 
 module.exports = router;
