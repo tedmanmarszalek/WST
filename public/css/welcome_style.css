@@ -48,6 +48,30 @@ html, body
     	height: 64px;
 	}
 
+	.slick-slider
+	{
+		height: 100px;
+	}
+
+	.slick-slide
+	{
+	    display: none;
+	    float: left;
+
+	    width: 200px;
+	    height: 130px;
+	    min-height: 1px;
+	    margin: 0 15px;
+	}
+
+	.slick-slide img
+	{
+    	display: block;
+
+    	width: 100%;
+    	height: 100%;
+	}
+
 	#welcome
 	{
 		border: 1px solid grey;
@@ -62,24 +86,4 @@ html, body
 	{
 		width: 95%;
 	}
-
-	.slick-slide
-	{
-	    display: none;
-	    float: left;
-
-	    width: 200px;
-	    height: 130px;
-	    min-height: 1px;
-	    margin: 5px;
-	}
-
-	.slick-slide img
-	{
-	    display: block;
-
-	    height: 100%;
-	    width: 100%;
-	}
-
 }
