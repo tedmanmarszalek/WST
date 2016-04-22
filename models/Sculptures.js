@@ -12,6 +12,7 @@ var SculptureSchema = new Schema({
 	coordinates_longitude: {type: Number},
 	artist: {type: String},
 	artist_statement: {type: String},
+	type: {type: String}
 }, {versionKey: false});
 
 mongoose.model('Sculpture', SculptureSchema);
