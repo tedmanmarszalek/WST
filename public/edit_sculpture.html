@@ -19,8 +19,19 @@ var app = angular.module('addSculpture', []);
       return { getData: getData };
     });
 
+     app.factory('typesListFactory', function($http){
+      var getData = function(){
+        return $http.get("/types").then(function(result){
+          return result.data;
+        });  
+      }
 
-app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListFactory) {
+      return { getData: getData };
+    });
+   
+
+
+app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListFactory, typesListFactory) {
   
   var init = function () {
     if(sessionStorage.getItem('token') === null){
@@ -44,7 +55,9 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
   $scope.uploadVideo = true;
   $scope.videoLink = "";
   $scope.token = sessionStorage.getItem('token');
-
+  $scope.types = [];
+  $scope.selectedType = "";
+  
   var sculpturePromise = sculptureListFactory.getData();
   var edit_name = sessionStorage.getItem('sculptureToEdit');
 
@@ -74,6 +87,14 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
     }
   });
 
+  var typesPromise = typesListFactory.getData();
+  typesPromise.then(function(result) {
+      var data = result;
+      for(var i = 0; i < data.length; i++){
+        $scope.types.push(data[i]); 
+      }
+    });
+
   $scope.submit = function(){
     var sculpture = { 
               sculpture_name: $scope.sculpture_name, 
@@ -85,6 +106,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
               coordinates_longitude: $scope.coordinates_longitude,
               artist: $scope.artist,
               artist_statement: $scope.artist_statement,
+              type: $scope.selectedType,
               token: sessionStorage.getItem('token')
             };
 
@@ -146,6 +168,11 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
           </div>
         </div>
 
+        <label for="typebox"> Type </label><br>
+        <select name="typebox" id="typebox" ng-model="selectedType">
+          <option ng-repeat="type in types" value={{type.name}}>{{type.name}}</option>
+        </select><br>
+
          <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
 
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
@@ -154,27 +181,9 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
              <label for="audio">Add Audio</label> <input type="file" name="audio">
             </div></div>
-
-            <div style="padding-top:10px;"><strong> Add Video </strong></div>
-
-            <div class="form-group" style="padding-top:5px;">
-              <div class="input-group">
-              <label class="col-sm-2">Type</label>
-              <label class="radio-inline" style="padding-left:50px;">
-              <input type="radio" ng-model="uploadVideo" ng-value="true">Upload</label>
-              <label class="radio-inline"> 
-              <input type="radio" ng-model="uploadVideo" ng-value="false">Link</label>
-              </div></div>
-
-            <div ng-show="uploadVideo" >
-            <div class="form-group" > <div class="input-group">
-            <input type="file" name="video">
-            </div></div></div>
-        
-            <div ng-hide="uploadVideo">
-            <div class="form-group" > <div class="input-group">
-            <input type="text" class="form-control" id="videoLink" ng-model="videoLink" placeholder="Video Link">
-            </div></div></div>
+            <div class="form-group"style="padding-top:10px;"> <div class="input-group">
+             <label for="audio">Add Video</label> <input type="file" name="audio">
+            </div></div>
 
             <input type="hidden" name="sculpture_name" value="{{ sculpture_name }}">
             <input type="hidden" name="token" value="{{ token }}">

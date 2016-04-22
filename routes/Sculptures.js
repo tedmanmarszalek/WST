@@ -32,7 +32,8 @@ router.post('/', function(req, res, next){
 					coordinates_latitude: req.body.coordinates_latitude,
 					coordinates_longitude: req.body.coordinates_longitude,
 					artist: req.body.artist,
-					artist_statement: req.body.artist_statement
+					artist_statement: req.body.artist_statement, 
+					type: req.body.type
 				};
 				console.log("Created new sculpture object");
 				var sculpture = new Sculpture(sculpture_object);
@@ -46,7 +47,9 @@ router.post('/', function(req, res, next){
 						coordinates_latitude: req.body.coordinates_latitude,
 						coordinates_longitude: req.body.coordinates_longitude,
 						artist: req.body.artist,
-						artist_statement: req.body.artist_statement}
+						artist_statement: req.body.artist_statement, 
+						type: req.body.type
+						}
 					};
 				var options = {upsert: true, new: true};
 
