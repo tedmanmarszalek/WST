@@ -24,7 +24,14 @@
     });
 
     app.controller('SculptureListCtrl', function ($scope, $http, $window, sculptureListFactory) {
-      
+      var init = function () {
+        if(sessionStorage.getItem('token') === null){
+           $window.location = "login.html";
+        }
+      };
+
+      init();
+
       $scope.sculptures = [];
       $scope.searchString = "";
       $scope.message = "";
@@ -46,7 +53,7 @@
 
         if (confirm("Are you sure you want to delete?") == true) {
 
-          var sculptureToDelete = {sculpture_name: sculpture_name};
+          var sculptureToDelete = {sculpture_name: sculpture_name, token: sessionStorage.getItem('token')};
           $http.post('/upload/delete', sculptureToDelete).then(function successCallback(response){
           $window.location.reload();
               if(response.data.success === true){
@@ -125,11 +132,6 @@
             <td>
               <img src="{{ sculpture.image }}" alt="" height=200 width=200></img>
             </td>
-
-
-
-
-
           </tr>                    
         </tbody>      
       </table>
