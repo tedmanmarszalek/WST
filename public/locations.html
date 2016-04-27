@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Add Location </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+<script>
+var app = angular.module('addSculpture', []);
+
+app.factory('moduleFactory', function($http){
+  var getData = function(){
+    console.log("got into factory");
+    return $http.get("/locations").then(function(result){
+      return result.data;
+    });  
+  }
+
+  return { getData: getData };
+});
+
+app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory) {
+  
+  var init = function () {
+    if(sessionStorage.getItem('token') === null){
+       $window.location = "login.html";
+    }
+  };
+
+  init();
+
+  $scope.token = sessionStorage.getItem('token');
+  $scope.name = '';
+  $scope.locations = [];
+
+  var modulePromise = moduleFactory.getData();
+  modulePromise.then(function(result) {
+    var data = result;
+    for(var i = 0; i < data.length; i++){
+      $scope.locations.push(data[i]); 
+    }
+  });
+
+  $scope.submit = function(){
+    var type = { 
+        name: $scope.name,
+        coordinates_latitude: $scope.coordinates_latitude,
+        coordinates_longitude: $scope.coordinates_longitude,
+        active: $scope.active,
+        token: sessionStorage.getItem('token')
+      };
+
+    $http.post('/locations', type).then(function successCallback(response){
+        if(response.data.success === true){
+          $scope.message = "Location Added";
+        }
+        else {
+          $scope.message = "error";
+        }
+
+    }, function errorCallback(response){
+      console.log("error");
+    });
+
+    $window.location.reload();
+
+  }
+
+    $scope.delete = function(type_id){
+
+      console.log(type_id);
+      if (confirm("Are you sure you want to delete?") == true) {
+
+        var typeToDelete = {id: type_id, token: sessionStorage.getItem('token')};
+        $http.post('/locations/delete', typeToDelete).then(function successCallback(response){
+        $window.location.reload();
+            if(response.data.success === true){
+              $scope.message = "Location Deleted";
+             $window.location.reload();
+            }
+            else {
+              $window.location.reload();
+              $scope.message = "error";
+            }
+
+        }, function errorCallback(response){
+          console.log("error");
+        });
+        $window.location.reload();
+
+      } 
+      else {}
+  }
+
+});
+</script>
+
+<body ng-app="addSculpture" ng-controller="AddSculptCtrl" style="overflow-x:hidden">
+
+    <div class="row" style="padding-top:50px;">
+        <div class="col-md-7 col-md-offset-2">
+      <p style="font-size:40px; padding-bottom:20px;">Add Location</p>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2">
+      <div class="form-group">
+        <label for="name">Location</label>
+        <input class="form-control" id="name" type="text" ng-model="name" placeholder="Location Name">
+      </div>
+      <div class="form-group">
+        <label for="latitude">Latitude</label>
+        <input class="form-control" id="latitude" type="text" ng-model="coordinates_latitude" placeholder="40.02">
+      </div>
+      <div class="form-group">
+        <label for="longitude">Longitude</label>
+        <input class="form-control" id="longitude" type="text" ng-model="coordinates_longitude" placeholder="-80.02">
+      </div>
+
+      <p style="padding-top:12px;">
+      <button type="submit" class="btn btn-primary" ng-click="submit()">Submit</button>
+
+      <p style="font-size:20px; padding-top:10px; color:red;"> {{ message }} </p>
+    </div>
+
+    <div class="row" style="padding-top:200px;">
+        <div class="col-md-7 col-md-offset-2">
+      <p style="font-size:40px;">Current Locations</p>
+      </div>
+    </div>
+
+    <div class="container col-md-offset-2">
+      <table class = "table">
+        <thead>
+          <tr>
+            <th class="col-md-3"> Name </th>
+            <th class="col-md-3"> Coordinates</th>
+          </tr>
+        <thead>
+
+        <tbody>
+          <tr ng-repeat="location in locations track by $index">
+            <td style="padding-top:12px; font-size:40px;"> {{ location.name }}
+            <p> <button type="button" class="btn btn-danger btn-lg" ng-click="delete(location._id)">Delete</button> </p>
+            </td>
+            <td>
+            {{ location.coordinates_latitude }}, {{ location.coordinates_longitude }}
+            </td>
+          </tr>                    
+        </tbody>      
+      </table>
+    </div>
+
+</body>
+</html>
