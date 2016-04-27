@@ -35,12 +35,21 @@
       }
       return { getData: getData };
     });
-    app.controller('SculptureListCtrl', function ($scope, sculptureListFactory) {
+    app.factory('advertListFactory', function($http){
+      var getData = function(){
+        return $http.get("/advertisements").then(function(result){
+          return result.data;
+        });  
+      }
+      return { getData: getData };
+    });
+    app.controller('SculptureListCtrl', function ($scope, sculptureListFactory, advertListFactory) {
       
       $scope.sculpture = null;
       $scope.addImage = false;
       $scope.name = sessionStorage.getItem('name');
       $scope.number = sessionStorage.getItem('number');
+      $scope.advert = null;
       var sculpturePromise = sculptureListFactory.getData();
       sculpturePromise.then(function(result) {
         console.log("promise completed");
@@ -50,6 +59,18 @@
           {
             console.log("pushing" + data[i].sculpture_name + "to sculpture");
             $scope.sculpture = data[i];
+          }
+        }
+      });
+      var advertPromise = advertListFactory.getData();
+      advertPromise.then(function(result) {
+        console.log("promise completed");
+        var data = result;
+        for(var i = 0; i < data.length; i++){
+          if(data[i].active)
+          {
+            console.log("pushing" + data[i].name + " to advert");
+            $scope.advert = data[i];
           }
         }
       });
@@ -92,11 +113,19 @@
     function openAudioModal(){
       $('#myAudioModal').modal('show');
     }
+    function openAdvertModal(){
+      $('#myAdvertModal').modal('show');
+    }
   </script>
 </head>
 <body ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
   <div id="map"></div>
-  <img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications.png"></img>
+  <div ng-if="advert === null">
+    <img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications.png"></img>
+  </div>
+  <div ng-if="advert !== null" >
+    <a href="" onclick="openAdvertModal()" role "button" data-toggle="modal"><img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications-Alert.png"></img></a>
+  </div>
   <img style="position:absolute; width:100px; height:100px; top:30px; left:30px" src="/img/Icons/GoBackToList.png" onclick="document.location = 'overview.html';"></img>
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
       async defer></script>
@@ -140,14 +169,25 @@
           <iframe id="Video" width="800" height="500" src="https://www.youtube.com/embed/w5tjplB-vtE" frameborder="0" allowfullscreen></iframe>
       </div>
   </div> 
-  <div id="myAudioModal" class="modal fade">
-      <div class="modal-body" style="padding:90px; padding-top: 500px;">
-          <audio controls>
+  <div id="myAudioModal" class="modal fade" style="padding-top:500px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Audio Story</h4>
+      </div>
+      <div class="modal-body" >
+          <audio style="width:100%;" controls>
             <source src="http://www.w3schools.com/html/horse.ogg" type="audio/ogg" />
             <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />
             <a href="http://www.w3schools.com/html/horse.mp3">horse</a>
           </audio>
       </div>
+    </div>
+  </div>
+  <div id="myAdvertModal" class="modal fade">
+    <div class="modal-body" style="position:absolute; left:20%; top:20%;">
+        <img src="{{advert.path}}"></img>
+    </div>
   </div>   
 </body>
 </html>                                   
