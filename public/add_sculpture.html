@@ -47,7 +47,8 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
   $scope.token = sessionStorage.getItem('token');
   $scope.types = [];
   $scope.selectedType = '';
-  
+  $scope.number;
+
   var sculpturePromise = addSculptureFactory.getData();
   sculpturePromise.then(function(result) {
       var data = result;
@@ -56,7 +57,8 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
       }
     });
 
-  $scope.submit = function(){
+  $scope.submit = function(event){
+    event.preventDefault();    
     var sculpture = { 
               sculpture_name: $scope.sculpture_name, 
     				  video: $scope.video,
@@ -67,7 +69,8 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
               coordinates_longitude: $scope.coordinates_longitude,
     				  artist: $scope.artist,
     				  artist_statement: $scope.artist_statement,
-              token: sessionStorage.getItem('token')
+              token: sessionStorage.getItem('token'),
+              number: $scope.number
     				};
 
     $http.post('/sculpture', sculpture).then(function successCallback(response){
@@ -75,11 +78,11 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
          	$scope.message = "Sculpture Added";
         }
         else {
-          $scope.message = "error";
+          $scope.message = "Error";
         }
 
     }, function errorCallback(response){
-      console.log("error");
+          $scope.message = "Error";
     });
 
   }
@@ -122,6 +125,11 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
         </div>
 
         <div class="form-group">
+          <label for="name">Number</label>
+          <input class="form-control" id="Number" type="text" ng-model="number" placeholder="Number">
+        </div>
+
+        <div class="form-group">
           <div class="input-group">
             <p><b>Status</b></p>
             <label class="radio-inline"><input type="radio" ng-model="active" ng-value="true">Active</label>
@@ -149,10 +157,10 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
             <input type="hidden" name="token" value="{{ token }}">
 
             <p style="padding-top:12px;">
-            <button type="submit" class="btn btn-primary" ng-click="submit()">Submit</button>
+            <button type="submit" class="btn btn-primary" ng-click="submit($event)">Submit</button>
     </form>
 
-    <p style="font-size:20px; padding-top:10px; color:red;"> {{ message }} </p>
+    <b><p style="font-size:24px; padding-top:10px; padding-bottom:40px; color:red;"> {{ message }} </p></b>
 
     </div>
 

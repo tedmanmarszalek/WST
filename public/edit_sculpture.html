@@ -57,7 +57,10 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
   $scope.token = sessionStorage.getItem('token');
   $scope.types = [];
   $scope.selectedType = "";
-  
+  $scope.number;
+  $scope.type;
+  $scope.id;
+
   var sculpturePromise = sculptureListFactory.getData();
   var edit_name = sessionStorage.getItem('sculptureToEdit');
 
@@ -84,6 +87,10 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
       $scope.coordinates_longitude = sculpture.coordinates_longitude;
       $scope.artist = sculpture.artist;
       $scope.artist_statement = sculpture.artist_statement;
+      $scope.number = sculpture.number; 
+      $scope.type = sculpture.type
+      $scope.id = sculpture._id;
+      console.log($scope.id);
     }
   });
 
@@ -95,32 +102,35 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
       }
     });
 
-  $scope.submit = function(){
+  $scope.submit = function(event){
+    event.preventDefault();    
     var sculpture = { 
-              sculpture_name: $scope.sculpture_name, 
-              video: $scope.video,
-              image: $scope.image,
-              audio: $scope.audio,
-              active: $scope.active,
-              coordinates_latitude: $scope.coordinates_latitude,
-              coordinates_longitude: $scope.coordinates_longitude,
-              artist: $scope.artist,
-              artist_statement: $scope.artist_statement,
-              type: $scope.selectedType,
-              token: sessionStorage.getItem('token')
-            };
+      selectedId: $scope.id,
+      sculpture_name: $scope.sculpture_name, 
+      video: $scope.video,
+      image: $scope.image,
+      audio: $scope.audio,
+      active: $scope.active,
+      coordinates_latitude: $scope.coordinates_latitude,
+      coordinates_longitude: $scope.coordinates_longitude,
+      artist: $scope.artist,
+      artist_statement: $scope.artist_statement,
+      type: $scope.selectedType,
+      token: sessionStorage.getItem('token'),
+      number: $scope.number
+    };
 
-    $http.post('/sculpture', sculpture).then(function successCallback(response){
+    $http.post('/sculpture/edit', sculpture).then(function successCallback(response){
         if(response.data.success === true){
-          $scope.message = "Sculpture Added";
+          $scope.message = "Edit Success";
         }
         else {
-          $scope.message = "error";
+          $scope.message = "Error";
         }
 
     }, function errorCallback(response){
-      console.log("error");
-    });
+        $scope.message = "Error";
+      });
   }
 });
 </script>
@@ -161,6 +171,11 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
         </div>
 
         <div class="form-group">
+          <label for="Statement">Number</label>
+          <input class="form-control" id="Statement" type="text" ng-model="number">
+        </div>
+
+        <div class="form-group">
           <div class="input-group">
             <p><b>Status</b></p>
             <label class="radio-inline"><input type="radio" ng-model="active" ng-value="true">Active</label>
@@ -168,12 +183,13 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
           </div>
         </div>
 
-        <label for="typebox"> Type </label><br>
+        <label for="typebox"> Type </label><br> 
         <select name="typebox" id="typebox" ng-model="selectedType">
-          <option ng-repeat="type in types" value={{type.name}}>{{type.name}}</option>
-        </select><br>
+          <option ng-repeat="type in types" value={{type.name}}>{{type.name}}</option> 
+        </select> <br>
 
-         <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+
+         <form ng-submit="" action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
 
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
              <label for="image">Add Image</label> <input type="file" name="image">
@@ -188,10 +204,12 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
             <input type="hidden" name="sculpture_name" value="{{ sculpture_name }}">
             <input type="hidden" name="token" value="{{ token }}">
             <p style="padding-top:12px;">
-            <button type="submit" class="btn btn-primary" ng-click="submit()">Submit</button>
+            <button type="submit" class="btn btn-primary" ng-click="submit($event)">Submit</button>
+
     </form>
 
-    <p style="font-size:20px; padding-top:10px; color:red;"> {{ message }} </p>
+
+    <b><p style="font-size:24px; padding-top:10px; padding-bottom:40px; color:red;"> {{ message }} </p></b>
 
     </div>
 
