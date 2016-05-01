@@ -78,6 +78,11 @@ router.post('/', fields, function(req, res, next){
 				var audio_exists = 'audio' in req.files ? true : false;
 				var video_exists = 'video' in req.files ? true : false;
 
+				console.log("video_exists is " + video_exists);
+				console.log("image_exists is " + image_exists);
+				console.log("audio_exists is " + audio_exists);
+
+
 				if(image_exists === true){
 					var image = {
 						file_name: req.files['image'][0].filename,
@@ -99,6 +104,7 @@ router.post('/', fields, function(req, res, next){
 				}
 
 				if(video_exists === true){
+					console.log("video_exists is true");
 					var video = {
 						file_name: req.files['video'][0].filename,
 						path: "/uploads/" + req.files['video'][0].filename,
@@ -106,6 +112,7 @@ router.post('/', fields, function(req, res, next){
 						type: "video"
 					};
 					var video_file = new File(video);
+					console.log("created video file");
 				}
 
 
@@ -142,6 +149,7 @@ router.post('/', fields, function(req, res, next){
 				}
 
 				if(video_exists === true){
+					console.log("saving video file");
 					video_file.save(function(err, result){
 						if(err){
 							console.log(err);
