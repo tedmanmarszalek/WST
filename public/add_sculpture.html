@@ -58,12 +58,12 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
     });
 
   $scope.submit = function(event){
-    event.preventDefault();    
+    //event.preventDefault();    
     var sculpture = { 
               sculpture_name: $scope.sculpture_name, 
-    				  //video: $scope.video,
-    				  //image: $scope.image,
-    				  //audio: $scope.audio,
+    				  video: $scope.video,
+    				  image: $scope.image,
+    				  audio: $scope.audio,
     				  active: $scope.active,
     				  coordinates_latitude: $scope.coordinates_latitude,
               coordinates_longitude: $scope.coordinates_longitude,
