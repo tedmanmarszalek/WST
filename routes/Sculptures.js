@@ -98,9 +98,9 @@ router.post('/edit', function(req, res, next){
 				var update = {$set: { 
 						sculpture_name: req.body.sculpture_name,
 						active:req.body.active, 
-						video: req.body.video,
-						image: req.body.image,
-						audio: req.body.audio,
+						//video: req.body.video,
+						//image: req.body.image,
+						//audio: req.body.audio,
 						coordinates_latitude: req.body.coordinates_latitude,
 						coordinates_longitude: req.body.coordinates_longitude,
 						artist: req.body.artist,
