@@ -4,6 +4,7 @@ html, body
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x:hidden;
 }
 
 #map
@@ -89,6 +90,28 @@ html, body
 	font-family:Geneva, Arial;
 }
 
+#myVideoModal
+{
+	padding-top:500px;
+}
+
+#myAudioModal
+{
+	padding-top:500px;
+}
+
+#modal
+{
+	width:100%;
+}
+
+#ad-modal
+{
+	position:absolute;
+	left:20%;
+	top:20%;
+}
+
 
 	
 /** Mobile specifications **/
@@ -101,6 +124,7 @@ html, body
 	  height: 100%;
 	  margin: 0;
 	  padding: 0;
+	  overflow-x:hidden;
 	}
 
 	#map
@@ -186,6 +210,27 @@ html, body
 		font-family:Geneva, Arial;
 	}
 
+	#myVideoModal
+	{
+		padding-top:500px;
+	}
+
+	#myAudioModal
+	{
+		padding-top:500px;
+	}
+
+	#modal
+	{
+		width:100%;
+	}
+
+	#ad-modal
+	{
+		position:absolute;
+		left:20%;
+		top:20%;
+	}
 }
 
 

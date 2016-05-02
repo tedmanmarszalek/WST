@@ -4,6 +4,7 @@ html, body
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow-x:hidden;
 }
 
 #map
@@ -34,6 +35,43 @@ html, body
 	left:30px
 }
 
+.icon
+{
+	height: 70px;
+	width: 70px;
+}
+
+.number
+{
+	padding-top:67px;
+	padding-left:40px;
+}
+
+.sculpture-img
+{
+	height:200px;
+	width:200px;
+}
+
+#object-table
+{
+	height:800px;
+	overflow:auto;
+	width:100%;
+}
+
+#table
+{
+	width:100%;
+}
+
+#ad-modal
+{
+	position:absolute;
+	left:20%;
+	top:20%;
+}
+
 
 /** Mobile specifications **/
 
@@ -45,6 +83,7 @@ html, body
 	    height: 100%;
 	    margin: 0;
 	    padding: 0;
+	    overflow-x:hidden;
 	}
 
 	#map
@@ -73,6 +112,37 @@ html, body
 		height:100px;
 		top:30px;
 		left:30px
+	}
+
+	.icon
+	{
+		height: 70px;
+		width: 70px;
+	}
+
+	.sculpture-img
+	{
+		height:200px;
+		width:200px;
+	}
+
+	#object-table
+	{
+		height:800px;
+		overflow:auto;
+		width:100%;
+	}
+
+	#table
+	{
+		width:100%;
+	}
+
+	#ad-modal
+	{
+		position:absolute;
+		left:20%;
+		top:20%;
 	}
 
 }

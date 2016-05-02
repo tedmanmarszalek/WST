@@ -116,7 +116,7 @@
   </script>
 </head>
 
-<body ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
+<body ng-app="list_sculptures" ng-controller="SculptureListCtrl">
 
   <div id="map"></div>
   
@@ -174,28 +174,27 @@
     Sound Tour: Story Behind {{sculpture.sculpture_name}}
   </div>
 
-  <div id="myVideoModal" class="modal fade" style="padding-top:500px;">
+  <div id="myVideoModal" class="modal fade">
     <div class="modal-body">
-      <video ng-src="{{sculpture.video}}" controls class="center-block video" preload="auto" style="width:100%;">
+      <video ng-src="{{sculpture.video}}" controls class="center-block video" preload="auto" id="modal">
       </video>
     </div>
   </div> 
 
-  <div id="myAudioModal" class="modal fade" style="padding-top:500px;">
+  <div id="myAudioModal" class="modal fade">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Audio Story</h4>
       </div>
       <div class="modal-body" >
-          <audio ng-src="{{sculpture.audio}}" style="width:100%;" controls>
-          </audio>
+          <audio ng-src="{{sculpture.audio}}" id="modal" controls></audio>
       </div>
     </div>
   </div>
 
   <div id="myAdvertModal" class="modal fade">
-    <div class="modal-body" style="position:absolute; left:20%; top:20%;">
+    <div class="modal-body" id="ad-modal">
         <img src="{{advert.path}}"></img>
     </div>
   </div> 
