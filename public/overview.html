@@ -163,44 +163,52 @@
     }
   </script>
 </head>
-<body ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
+<body ng-app="list_sculptures" ng-controller="SculptureListCtrl">
 
-  <div id="map"></div>
+  
 
-  <div ng-if="advert === null">
-    <img class="notification-img" src="/img/Icons/Notifications.png"></img>
-  </div>
+    <div id="map"></div>
 
-  <div ng-if="advert !== null" >
-    <a href="" onclick="openAdvertModal()" role "button" data-toggle="modal"><img class="notification-img" src="/img/Icons/Notifications-Alert.png"></img></a>
-  </div>
+    <div ng-if="advert === null">
+      <img class="notification-img" src="/img/Icons/Notifications.png"></img>
+    </div>
 
-  <img class="homepageonmapview-img" src="/img/Icons/HomePageOnMapView.png" onclick="document.location = 'tour_options.html';"></img>
+    <div ng-if="advert !== null" >
+      <a href="" onclick="openAdvertModal()" role "button" data-toggle="modal"><img class="notification-img" src="/img/Icons/Notifications-Alert.png"></img></a>
+    </div>
 
-  <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
-  <div><p><h3>Scroll to view and select an object</h3></p></div>
-  <div class="container" style="height:800px; overflow:auto; width:100%;">
-      <table class = "table" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
-        <thead>
-          <tr>
-            <th class="col-md-1 col-xs-1"></th>
-            <th class="col-md-8 col-xs-7"></th>
-            <th class="col-md-0 col-xs-0"></th>
-          </tr>
-        <thead>
+    <img class="homepageonmapview-img" src="/img/Icons/HomePageOnMapView.png" onclick="document.location = 'tour_options.html';"></img>
 
-        <tbody>
-          <tr ng-repeat="sculpture in sculptures">
-            <td style="padding-top:12px; align:center; vertical-align:middle;"><img src="/img/Icons/Circles/BlackBig/{{ sculpture.number }}BlackBig.png" alt="" height=70 width=70></img></td>
-            <td id="{{sculpture.number}}" style="padding-top:67px; padding-left:40px;" align="left" onclick="sessionStorage.name=this.textContent; sessionStorage.number=this.id; document.location = 'detail.html';"> <FONT COLOR=BLACK FACE="Geneva, Arial" SIZE=7>{{sculpture.sculpture_name}}</FONT></td>
-            <td style="padding-top:0px; padding-bottom:0px;" align="right"><img src="{{ sculpture.image }}" alt="" height=200 width=200></img> </td>
-          </tr>                    
-        </tbody>      
-      </table>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+
+  <div class="white-container">
+
+    <div class="instruction"><p><h3>Scroll to view and select an object</h3></p></div>
+
+    <div class="container" id="object-table">
+        <table class = "table" border="0" cellpadding="0" cellspacing="0" id="table">
+          <thead>
+            <tr>
+              <th class="col-md-1 col-xs-1"></th>
+              <th class="col-md-8 col-xs-7"></th>
+              <th class="col-md-0 col-xs-0"></th>
+            </tr>
+          <thead>
+
+          <tbody>
+            <tr ng-repeat="sculpture in sculptures">
+              <td style="padding-top:12px; align:center; vertical-align:middle;"><img src="/img/Icons/Circles/BlackBig/{{ sculpture.number }}BlackBig.png" alt="" height=70 width=70></img></td>
+              <td id="{{sculpture.number}}" style="padding-top:67px; padding-left:40px;" align="left" onclick="sessionStorage.name=this.textContent; sessionStorage.number=this.id; document.location = 'detail.html';"> <FONT COLOR=BLACK FACE="Geneva, Arial" SIZE=7>{{sculpture.sculpture_name}}</FONT></td>
+              <td style="padding-top:0px; padding-bottom:0px;" align="right"><img src="{{ sculpture.image }}" alt="" height=200 width=200></img> </td>
+            </tr>                    
+          </tbody>      
+        </table>
+    </div>
+
   </div>
 
   <div  id="myAdvertModal" class="modal fade">
-    <div class="modal-body" style="position:absolute; left:20%; top:20%;">
+    <div class="modal-body" id="ad-modal">
       <img src="{{advert.path}}"></img>
     </div>
   </div>
