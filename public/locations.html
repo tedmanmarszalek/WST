@@ -32,10 +32,11 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
 
   $scope.token = sessionStorage.getItem('token');
   $scope.name = '';
-  $scope.locations = [];
+  $scope.locations = [{name: "Loading..."}];
 
   var modulePromise = moduleFactory.getData();
   modulePromise.then(function(result) {
+    $scope.locations.pop();
     var data = result;
     for(var i = 0; i < data.length; i++){
       $scope.locations.push(data[i]); 
