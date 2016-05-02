@@ -68,13 +68,30 @@
       });
     });
     function initMap() {
+      var location = sessionStorage.getItem('tourLocation');
       var mapDiv = document.getElementById('map');
-      var map = new google.maps.Map(mapDiv, {
-        center: {lat: 40.079874, lng: -88.204610},
-        zoom: 17,
-        mapTypeControl: false,
-        streetViewControl: false
-      });  
+      var map = null;
+      xmlLocationHttp = new XMLHttpRequest();
+      xmlLocationHttp.onreadystatechange = function() {
+        if(xmlLocationHttp.readyState == 4 && xmlLocationHttp.status == 200)
+        {
+          var myLoc = JSON.parse(xmlLocationHttp.responseText);
+          addMap(myLoc);
+        }
+      }
+      xmlLocationHttp.open("GET", "/api/locations", true);
+      xmlLocationHttp.send();
+      function addMap(arr){
+        if(arr[0].name == location)
+        {
+          map = new google.maps.Map(mapDiv, {
+          center: {lat: arr[0].coordinates_latitude, lng: arr[0].coordinates_longitude},
+          zoom: 17,
+          mapTypeControl: false,
+          streetViewControl: false
+          }); 
+        }
+      }   
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.onreadystatechange = function() {
         if(xmlHttp.readyState == 4 && xmlHttp.status == 200) 
