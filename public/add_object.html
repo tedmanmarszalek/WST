@@ -80,6 +80,12 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
     //event.preventDefault();    
     var sculpture = { 
               sculpture_name: $scope.sculpture_name, 
+<<<<<<< HEAD:public/add_object.html
+=======
+    				  //video: $scope.video,
+    				  //image: $scope.image,
+    				  //audio: $scope.audio,
+>>>>>>> origin/master:public/add_sculpture.html
     				  active: $scope.active,
     				  coordinates_latitude: $scope.coordinates_latitude,
               coordinates_longitude: $scope.coordinates_longitude,
@@ -174,7 +180,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
              <label for="audio">Add Audio</label> <input type="file" name="audio">
             </div></div>
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
-             <label for="audio">Add Video</label> <input type="file" name="video">
+             <label for="video">Add Video</label> <input type="file" name="video">
             </div></div>
 
             <input type="hidden" name="sculpture_name" value="{{ sculpture_name }}">

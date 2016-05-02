@@ -19,9 +19,12 @@
   <title>UPD</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
   <script src="https://rawgit.com/angular-ui/angular-google-maps/2.3.2/dist/angular-google-maps.min.js"></script>
+  <script src="js/bootstrap.js"></script>
   <script>
 
     var app = angular.module('list_sculptures', []);
@@ -35,13 +38,20 @@
 
       return { getData: getData };
     });
-
-    app.controller('SculptureListCtrl', function ($scope, sculptureListFactory) {
+    app.factory('advertListFactory', function($http){
+      var getData = function(){
+        return $http.get("/advertisements").then(function(result){
+          return result.data;
+        });  
+      }
+      return { getData: getData };
+    });
+    app.controller('SculptureListCtrl', function ($scope, sculptureListFactory, advertListFactory) {
       
       $scope.sculptures = [];
       $scope.addImage = false;
+      $scope.advert = null;
       var sculpturePromise = sculptureListFactory.getData();
-
       sculpturePromise.then(function(result) {
         var data = result;
         iconNumber = 1;
@@ -50,6 +60,18 @@
             var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: iconNumber}
             $scope.sculptures.push(newSculpture); 
             iconNumber++;
+          }
+        }
+      });
+      var advertPromise = advertListFactory.getData();
+      advertPromise.then(function(result) {
+        console.log("promise completed");
+        var data = result;
+        for(var i = 0; i < data.length; i++){
+          if(data[i].active)
+          {
+            console.log("pushing" + data[i].name + " to advert");
+            $scope.advert = data[i];
           }
         }
       });
@@ -112,11 +134,17 @@
       }
       autoUpdateLocation(); 
     }
+    function openAdvertModal(){
+      $('#myAdvertModal').modal('show');
+    }
   </script>
 </head>
 <body ng-app="list_sculptures" ng-controller="SculptureListCtrl" style="overflow-x:hidden">
   <div id="map"></div>
-  <img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications.png"></img>
+  <div ng-if="advert === null"><img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications.png"></img></div>
+  <div ng-if="advert !== null" >
+    <a href="" onclick="openAdvertModal()" role "button" data-toggle="modal"><img style="position:absolute; width:100px; height:100px; top:30px; right:30px" src="/img/Icons/Notifications-Alert.png"></img></a>
+  </div>
   <img style="position:absolute; width:100px; height:100px; top:30px; left:30px" src="/img/Icons/HomePageOnMapView.png" onclick="document.location = '/';"></img>
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
       async defer></script>
@@ -139,5 +167,10 @@
         </tbody>      
       </table>
     </div>
+  <div  id="myAdvertModal" class="modal fade">
+    <div class="modal-body" style="position:absolute; left:20%; top:20%;">
+      <img src="{{advert.path}}"></img>
+    </div>
+  </div>
 </body>
 </html>

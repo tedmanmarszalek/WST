@@ -133,8 +133,13 @@ router.post('/edit', function(req, res, next){
 						//video: req.body.video,
 						//image: req.body.image,
 						//audio: req.body.audio,
+<<<<<<< HEAD
 						coordinates_latitude: coordinates_latitude,
 						coordinates_longitude: coordinates_longitude,
+=======
+						coordinates_latitude: req.body.coordinates_latitude,
+						coordinates_longitude: req.body.coordinates_longitude,
+>>>>>>> origin/master
 						artist: req.body.artist,
 						artist_statement: req.body.artist_statement, 
 						type: req.body.type,
