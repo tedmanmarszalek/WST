@@ -1,0 +1,193 @@
+html, body
+{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map
+{
+  width: 100%;
+  height: 50%;
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+}
+
+.notification-img
+{
+	position:absolute;
+	width:100px;
+	height:100px;
+	top:30px;
+	right:30px
+}
+
+.homepageonmapview-img
+{
+	position:absolute;
+	width:100px;
+	height:100px;
+	top:30px;
+	left:30px
+}
+
+.artistName
+{
+	padding-left: 30px;
+	padding-right:30px;
+	font-size:75px;
+	font-family:Geneva, Arial;
+	font-weight:bold;
+}
+
+.artistMessage
+{
+	padding-left: 30px;
+	padding-right:30px;
+	font-size:60px;
+	font-family:Geneva, Arial;
+	font-weight:bold;
+}
+
+.artistStatement
+{
+	padding-left: 30px;
+	padding-right:30px;
+	font-size:45px;
+	font-family:Geneva, Arial;
+}
+
+.video-image
+{
+	height: 25%;
+	width: 50%;
+}
+
+.audio-image
+{
+	height: 20%;
+	width: 20%;
+}
+
+.sculpture-image
+{
+	height: 200px;
+	width: 200px;
+}
+
+.videoNotNull
+{
+	padding: 30px;
+}
+
+.audioNotNull
+{
+	padding: 30px;
+	font-size:45px;
+	font-family:Geneva, Arial;
+}
+
+
+	
+/** Mobile specifications **/
+
+@media only screen and (max-device-width: 1080px){
+	
+	html, body
+	{
+	  width: 100%;
+	  height: 100%;
+	  margin: 0;
+	  padding: 0;
+	}
+
+	#map
+	{
+	  width: 100%;
+	  height: 50%;
+	  margin: 0 auto;
+	  position: fixed;
+	  top: 0;
+	}
+
+	.notification-img
+	{
+		position:absolute;
+		width:100px;
+		height:100px;
+		top:30px;
+		right:30px
+	}
+
+	.homepageonmapview-img
+	{
+		position:absolute;
+		width:100px;
+		height:100px;
+		top:30px;
+		left:30px
+	}
+
+	.artistName
+	{
+		padding-left: 30px;
+		padding-right:30px;
+		font-size:75px;
+		font-family:Geneva, Arial;
+		font-weight:bold;
+	}
+
+	.artistMessage
+	{
+		padding-left: 30px;
+		padding-right:30px;
+		font-size:60px;
+		font-family:Geneva, Arial;
+		font-weight:bold;
+	}
+
+	.artistStatement
+	{
+		padding-left: 30px;
+		padding-right:30px;
+		font-size:45px;
+		font-family:Geneva, Arial;
+	}
+
+	.video-image
+	{
+		height: 25%;
+		width: 50%;
+	}
+
+	.audio-image
+	{
+		height: 20%;
+		width: 20%;
+	}
+
+	.sculpture-image
+	{
+		height: 200px;
+		width: 200px;
+	}
+
+	.videoNotNull
+	{
+		padding: 30px;
+	}
+
+	.audioNotNull
+	{
+		padding: 30px;
+		font-size:45px;
+		font-family:Geneva, Arial;
+	}
+
+}
+
+
+
+

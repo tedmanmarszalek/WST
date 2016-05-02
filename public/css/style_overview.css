@@ -1,0 +1,78 @@
+html, body
+{
+  	width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#map
+{
+	width: 100%;
+	height: 50%;
+	margin: 0 auto;
+	position: fixed;
+	top: 0;
+}
+
+
+.notification-img
+{
+	position:absolute;
+	width:100px;
+	height:100px;
+	top:30px;
+	right:30px
+}
+
+.homepageonmapview-img
+{
+	position:absolute;
+	width:100px;
+	height:100px;
+	top:30px;
+	left:30px
+}
+
+
+/** Mobile specifications **/
+
+@media only screen and (max-device-width: 1080px){
+
+	html, body
+	{
+	  	width: 100%;
+	    height: 100%;
+	    margin: 0;
+	    padding: 0;
+	}
+
+	#map
+	{
+		width: 100%;
+		height: 50%;
+		margin: 0 auto;
+		position: fixed;
+		top: 0;
+	}
+
+
+	.notification-img
+	{
+		position:absolute;
+		width:100px;
+		height:100px;
+		top:30px;
+		right:30px
+	}
+
+	.homepageonmapview-img
+	{
+		position:absolute;
+		width:100px;
+		height:100px;
+		top:30px;
+		left:30px
+	}
+
+}
