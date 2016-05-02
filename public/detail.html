@@ -132,50 +132,54 @@
 
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
 
-  <div class="container" style="height:300px; width:100%;">
-    <table class = "table" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
-      <thead>
-        <tr>
-          <th class="col-md-1 col-xs-1"></th>
-          <th class="col-md-8 col-xs-7"></th>
-          <th class="col-md-0 col-xs-0"></th>
-        </tr>
-      <thead>
+  <div class="white-container">
 
-      <tbody>
+    <div class="container" id="object-table">
+      <table class = "table" border="0" cellpadding="0" cellspacing="0" id="table">
+        <thead>
           <tr>
-            <td style="padding-top:12px; align:center; vertical-align:middle;"><img src="/img/Icons/Circles/BlueBig/{{ number }}BlueBig.png" alt="" height=80 width=80></img></td>
-            <td id="{{sculpture.number}}" style="padding-top:50px; padding-left:40px; font-size:75px;" align="left">{{sculpture.sculpture_name}}</td>
-            <td style="padding-top:0px; padding-bottom:0px;" align="right"><img class="sculpture-image" src="{{ sculpture.image }}" alt=""></img> </td>
-          </tr>                    
-        </tbody> 
-    </table>
-  </div>
+            <th class="col-md-1 col-xs-1"></th>
+            <th class="col-md-8 col-xs-7"></th>
+            <th class="col-md-0 col-xs-0"></th>
+          </tr>
+        <thead>
 
-  <br>
-  <div class="artistName"><p align="center">By {{sculpture.artist}}</p></div>
-  <br>
+        <tbody>
+            <tr>
+              <td style="padding-top:12px; align:center; vertical-align:middle;"><img src="/img/Icons/Circles/BlueBig/{{ number }}BlueBig.png" alt="" height=80 width=80></img></td>
+              <td id="{{sculpture.number}}" style="padding-top:50px; padding-left:40px; font-size:75px;" align="left">{{sculpture.sculpture_name}}</td>
+              <td style="padding-top:0px; padding-bottom:0px;" align="right"><img class="sculpture-image" src="{{ sculpture.image }}" alt=""></img> </td>
+            </tr>                    
+          </tbody> 
+      </table>
+    </div>
 
-  <div ng-if="sculpture.artist_statement !== ''" class="artistMessage"><p align="center">Message from the artist(s)</p></div>
-  <div ng-if="sculpture.artist_statement !== ''" class="artistStatement"><p align="left">{{sculpture.artist_statement}}</p></div>
-  
-  <br>
-  <br>
-  
-  <div ng-if="sculpture.video !== null" class="videoNotNull">
-    <a href="" onclick="openVideoModal()" role "button" data-toggle="modal"><img class="video-image" src="/img/Icons/WatchVideo.png"></a>
-  </div>
+    <br>
+    <div class="artistName"><p align="center">By {{sculpture.artist}}</p></div>
+    <br>
 
-  <br>
-  <br>
+    <div ng-if="sculpture.artist_statement !== ''" class="artistMessage"><p align="center">Message from the artist(s)</p></div>
+    <div ng-if="sculpture.artist_statement !== ''" class="artistStatement"><p align="left">{{sculpture.artist_statement}}</p></div>
+    
+    <br>
+    <br>
+    
+    <div ng-if="sculpture.video !== null" class="videoExists">
+      <a href="" onclick="openVideoModal()" role "button" data-toggle="modal"><img class="video-image" src="/img/Icons/WatchVideo.png"></a>
+    </div>
 
-  <div ng-if="sculpture.audio !== null" class="audioNotNull">
-    <a href="" onclick="openAudioModal()" role "button" data-toggle="modal"><img class="audio-image" src="/img/Icons/PlayAudio.png"></a>
-    Sound Tour: Story Behind {{sculpture.sculpture_name}}
+    <br>
+    <br>
+
+    <div ng-if="sculpture.audio !== null" class="audioExists">
+      <a href="" onclick="openAudioModal()" role "button" data-toggle="modal"><img class="audio-image" src="/img/Icons/PlayAudio.png"></a>
+      Sound Tour: Story Behind {{sculpture.sculpture_name}}
+    </div>
+
   </div>
 
   <div id="myVideoModal" class="modal fade">
-    <div class="modal-body">
+    <div class="modal-body" id="modal">
       <video ng-src="{{sculpture.video}}" controls class="center-block video" preload="auto" id="modal">
       </video>
     </div>
@@ -198,6 +202,8 @@
         <img src="{{advert.path}}"></img>
     </div>
   </div> 
+
+  </div>
 
 </body>
 </html>                                   

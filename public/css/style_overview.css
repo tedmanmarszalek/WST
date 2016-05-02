@@ -5,11 +5,12 @@ html, body
     margin: 0;
     padding: 0;
     overflow-x:hidden;
+    background-color: #E8E8E8;
 }
 
 #map
 {
-	width: 100%;
+	width: 80%;
 	height: 50%;
 	margin: 0 auto;
 	position: fixed;
@@ -58,6 +59,7 @@ html, body
 	height:800px;
 	overflow:auto;
 	width:100%;
+	background-color: white;
 }
 
 #table
@@ -68,8 +70,23 @@ html, body
 #ad-modal
 {
 	position:absolute;
-	left:20%;
+	left:25%;
 	top:20%;
+}
+
+.instruction
+{
+	background-color:white;
+	vertical-align: top;
+	width:100%;
+	margin: 0 auto;
+}
+
+.white-container
+{
+	background-color: white;
+	width:80%;
+	margin: 0 auto;
 }
 
 
@@ -84,6 +101,7 @@ html, body
 	    margin: 0;
 	    padding: 0;
 	    overflow-x:hidden;
+	    background-color: white;
 	}
 
 	#map
@@ -143,6 +161,13 @@ html, body
 		position:absolute;
 		left:20%;
 		top:20%;
+	}
+
+	.white-container
+	{
+		background-color: white;
+		width:100%;
+		margin: 0 auto;
 	}
 
 }
