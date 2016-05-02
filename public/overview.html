@@ -15,7 +15,6 @@
   <script src="js/bootstrap.js"></script>
 
   <script>
-
     var app = angular.module('list_sculptures', []);
 
     app.factory('sculptureListFactory', function($http){
@@ -40,12 +39,14 @@
       $scope.sculptures = [];
       $scope.addImage = false;
       $scope.advert = null;
+      var location = sessionStorage.getItem('tourLocation');
+      var type = sessionStorage.getItem('tourType');
       var sculpturePromise = sculptureListFactory.getData();
       sculpturePromise.then(function(result) {
         var data = result;
         iconNumber = 1;
         for(var i = 0; i < data.length; i++){
-          if(data[i].active){
+          if(data[i].active && data[i].location == location && data[i].type == type){
             var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: iconNumber}
             $scope.sculptures.push(newSculpture); 
             iconNumber++;
@@ -66,6 +67,8 @@
       });
     });
     function initMap() {
+      var location = sessionStorage.getItem('tourLocation');
+      var type = sessionStorage.getItem('tourType');
       var mapDiv = document.getElementById('map');
       var map = new google.maps.Map(mapDiv, {
         center: {lat: 40.079874, lng: -88.204610},
@@ -86,7 +89,7 @@
       iconNum = 1;
       function addMarkers(arr){
         for(i = 0; i < arr.length; i++) {
-          if(arr[i].active){
+          if(arr[i].active && arr[i].location == location && arr[i].type == type){
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
               icon: '/img/Icons/Circles/BlackBig/' + iconNum + "BlackBig.png",
@@ -140,10 +143,10 @@
     <a href="" onclick="openAdvertModal()" role "button" data-toggle="modal"><img class="notification-img" src="/img/Icons/Notifications-Alert.png"></img></a>
   </div>
 
-  <img class="homepageonmapview-img" src="/img/Icons/HomePageOnMapView.png" onclick="document.location = '/';"></img>
+  <img class="homepageonmapview-img" src="/img/Icons/HomePageOnMapView.png" onclick="document.location = 'tour_options.html';"></img>
 
   <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
-
+  <div><p><h3>Scroll to view and select an object</h3></p></div>
   <div class="container" style="height:800px; overflow:auto; width:100%;">
       <table class = "table" border="0" cellpadding="0" cellspacing="0" style="width:100%;">
         <thead>

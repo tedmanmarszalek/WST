@@ -80,12 +80,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
     //event.preventDefault();    
     var sculpture = { 
               sculpture_name: $scope.sculpture_name, 
-<<<<<<< HEAD:public/add_object.html
-=======
-    				  //video: $scope.video,
-    				  //image: $scope.image,
-    				  //audio: $scope.audio,
->>>>>>> origin/master:public/add_sculpture.html
     				  active: $scope.active,
     				  coordinates_latitude: $scope.coordinates_latitude,
               coordinates_longitude: $scope.coordinates_longitude,
@@ -169,7 +163,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
 
         <label for="typebox"> Location </label><br>
         <select name="typebox" id="typebox" ng-model="selectedLocation">
-          <option ng-repeat="location in locations" value={{type.name}}>{{location.name}}</option>
+          <option ng-repeat="location in locations" value={{location.name}}>{{location.name}}</option>
         </select><br>
 
       <form action="http://localhost:8080/api/upload" method="post" enctype="multipart/form-data">
@@ -188,7 +182,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
 
             <p style="padding-top:12px;">
             <button type="submit" class="btn btn-primary" ng-click="submit($event)">Submit</button>
-    </form>
+      </form>
 
     <b><p style="font-size:24px; padding-top:10px; padding-bottom:40px; color:red;"> {{ message }} </p></b>
 
