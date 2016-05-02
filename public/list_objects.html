@@ -33,7 +33,7 @@
 
       init();
 
-      $scope.sculptures = [];
+      $scope.sculptures = [{sculpture_name: "Loading..."}];
       $scope.searchString = "";
       $scope.message = "";
       $scope.type = sessionStorage.getItem('moduleToEdit') + " At " + sessionStorage.getItem('locationToEdit');
@@ -42,6 +42,7 @@
 
       sculpturePromise.then(function(result) {
         var data = result;
+        $scope.sculptures.pop();
         for(var i = 0; i < data.length; i++){
           console.log(data[i]);
           if(sessionStorage.getItem('moduleToEdit') === 'All' && sessionStorage.getItem('locationToEdit') === 'All'){

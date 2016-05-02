@@ -40,9 +40,6 @@ router.post('/', function(req, res, next){
 
 	      		var sculpture_object = {
 					sculpture_name: req.body.sculpture_name,
-					//video: req.body.video,
-					//audio: req.body.audio,
-					//image: req.body.image,
 					active: req.body.active,
 					coordinates_latitude: coordinates_latitude,
 					coordinates_longitude: coordinates_longitude,
@@ -130,16 +127,10 @@ router.post('/edit', function(req, res, next){
 				var update = {$set: { 
 						sculpture_name: req.body.sculpture_name,
 						active:req.body.active, 
-						//video: req.body.video,
-						//image: req.body.image,
-						//audio: req.body.audio,
-<<<<<<< HEAD
 						coordinates_latitude: coordinates_latitude,
 						coordinates_longitude: coordinates_longitude,
-=======
 						coordinates_latitude: req.body.coordinates_latitude,
 						coordinates_longitude: req.body.coordinates_longitude,
->>>>>>> origin/master
 						artist: req.body.artist,
 						artist_statement: req.body.artist_statement, 
 						type: req.body.type,

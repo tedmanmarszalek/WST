@@ -37,7 +37,7 @@
     });
     app.factory('advertListFactory', function($http){
       var getData = function(){
-        return $http.get("/advertisements").then(function(result){
+        return $http.get("/api/advertisements").then(function(result){
           return result.data;
         });  
       }
