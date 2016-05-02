@@ -46,7 +46,13 @@
         var data = result;
         iconNumber = 1;
         for(var i = 0; i < data.length; i++){
-          if(data[i].active && data[i].location == location && data[i].type == type){
+          if (type == "All")
+          {
+            var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: iconNumber}
+            $scope.sculptures.push(newSculpture); 
+            iconNumber++;
+          }
+          else if(data[i].active && data[i].location == location && data[i].type == type){
             var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: iconNumber}
             $scope.sculptures.push(newSculpture); 
             iconNumber++;
@@ -69,27 +75,53 @@
     function initMap() {
       var location = sessionStorage.getItem('tourLocation');
       var type = sessionStorage.getItem('tourType');
-      var mapDiv = document.getElementById('map');
-      var map = new google.maps.Map(mapDiv, {
-        center: {lat: 40.079874, lng: -88.204610},
-        zoom: 17,
-        mapTypeControl: false,
-        streetViewControl: false
-      });  
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.onreadystatechange = function() {
-        if(xmlHttp.readyState == 4 && xmlHttp.status == 200) 
+      xmlLocationHttp = new XMLHttpRequest();
+      xmlLocationHttp.onreadystatechange = function() {
+        if(xmlLocationHttp.readyState == 4 && xmlLocationHttp.status == 200)
         {
-          var myArr = JSON.parse(xmlHttp.responseText);
+          var myLoc = JSON.parse(xmlLocationHttp.responseText);
+          addMap(myLoc);
+        }
+      }
+      xmlLocationHttp.open("GET", "/api/locations", true);
+      xmlLocationHttp.send();
+      var mapDiv = document.getElementById('map');
+      var map = null;
+      function addMap(arr){
+        if(arr[0].name == location)
+        {
+          map = new google.maps.Map(mapDiv, {
+          center: {lat: arr[0].coordinates_latitude, lng: arr[0].coordinates_longitude},
+          zoom: 17,
+          mapTypeControl: false,
+          streetViewControl: false
+          }); 
+        }
+      } 
+      var xmlMarkerHttp = new XMLHttpRequest();
+      xmlMarkerHttp.onreadystatechange = function() {
+        if(xmlMarkerHttp.readyState == 4 && xmlMarkerHttp.status == 200) 
+        {
+          var myArr = JSON.parse(xmlMarkerHttp.responseText);
           addMarkers(myArr);
         }
       };
-      xmlHttp.open("GET", "/api/sculpture", true);
-      xmlHttp.send();
+      xmlMarkerHttp.open("GET", "/api/sculpture", true);
+      xmlMarkerHttp.send();
       iconNum = 1;
       function addMarkers(arr){
         for(i = 0; i < arr.length; i++) {
-          if(arr[i].active && arr[i].location == location && arr[i].type == type){
+          if(type == "All")
+          {
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
+              icon: '/img/Icons/Circles/BlackBig/' + iconNum + "BlackBig.png",
+              draggable: false,
+              map: map
+            });
+            iconNum++;
+          }
+          else if(arr[i].active && arr[i].location == location && arr[i].type == type){
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
               icon: '/img/Icons/Circles/BlackBig/' + iconNum + "BlackBig.png",

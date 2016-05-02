@@ -64,6 +64,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
 </script>
 
 <body ng-app="addSculpture" ng-controller="AddSculptCtrl" style="overflow-x:hidden">
+  <img class="homepageonmapview-img" src="/img/Icons/GoBackToList.png" onclick="document.location = '/';"></img>
     <div class="row">
         <div class="col-lg-12 text-center">
             <img class="top-img" src="img/UPD.jpg" >
@@ -78,11 +79,14 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
     <div class="col-md-8 col-md-offset-2">
         <label for="typebox"> Location </label><br>
         <select name="typebox" id="typebox" ng-model="selectedLocation">
+          <option disabled selected value> -- select an option -- </option>
           <option ng-repeat="location in locations" value={{location.name}}>{{location.name}}s</option>
         </select><br>
 
         <label for="typebox"> Type </label><br>
         <select name="typebox" id="typebox" ng-model="selectedType">
+          <option disabled selected value> -- select an option -- </option>
+          <option value="All">All</option>
           <option ng-repeat="type in types" value={{type.name}}>{{type.name}}s</option>
         </select><br>
     </div>
