@@ -47,8 +47,8 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory,
   $scope.types = [allObject];
   $scope.locations = [allObject];
 
-  $scope.selectedLocation = allObject;
-  $scope.selectedType = allObject;
+  $scope.selectedLocation;
+  $scope.selectedType;
 
   var modulePromise = moduleFactory.getData();
   modulePromise.then(function(result) {
@@ -72,8 +72,8 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory,
     $window.location = "list_objects.html";
   }
 
-  $scope.selectedLocation = allObject;
-  $scope.selectedType = allObject;
+  //$scope.selectedLocation = allObject;
+  //$scope.selectedType = allObject;
 
 });
 </script>

@@ -27,7 +27,9 @@
         if(sessionStorage.getItem('token') === null){
            $window.location = "login.html";
         }
-        document.title = sessionStorage.getItem('moduleToEdit') + "s List";
+        document.title = sessionStorage.getItem('moduleToEdit') + " At " + sessionStorage.getItem('locationToEdit');
+        console.log('location: ' + sessionStorage.getItem('locationToEdit'));
+        console.log('module: ' + sessionStorage.getItem('moduleToEdit'));
 
       };
 
@@ -36,7 +38,7 @@
       $scope.sculptures = [{sculpture_name: "Loading..."}];
       $scope.searchString = "";
       $scope.message = "";
-      $scope.type = sessionStorage.getItem('moduleToEdit') + " At " + sessionStorage.getItem('locationToEdit');
+      $scope.title = sessionStorage.getItem('moduleToEdit') + " At " + sessionStorage.getItem('locationToEdit');
 
       var sculpturePromise = sculptureListFactory.getData();
 
@@ -54,7 +56,7 @@
           	}
           }
    	      else if(sessionStorage.getItem('moduleToEdit') !== 'All' && sessionStorage.getItem('locationToEdit') === 'All'){
-          	if(data[i].type === sessionStorage.getItem('typeToEdit')){
+          	if(data[i].type === sessionStorage.getItem('moduleToEdit')){
           		$scope.sculptures.push(data[i]);
           	}
           }
@@ -106,7 +108,7 @@
 
     <div class="row" style="padding-top:50px;">
       <div class="col-md-7 col-md-offset-2">
-        <p style="font-size:48px; padding-bottom:20px;"> {{type}} </p>
+        <p style="font-size:48px; padding-bottom:20px;"> {{title}} </p>
       </div>
     </div>
 
