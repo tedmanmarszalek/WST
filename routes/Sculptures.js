@@ -23,18 +23,34 @@ router.post('/', function(req, res, next){
 	      if (err) {
 	        return res.json({ success: false, message: 'Failed to authenticate token.' });    
 	      } else {
+	      		var number, coordinates_longitude, coordinates_latitude;
+
+	      		if(req.body.number === undefined || req.body.number === null)
+	      			number = 0;
+	      		else
+	      			number = req.body.number;
+      			if(req.body.coordinates_latitude === undefined || req.body.coordinates_latitude === null)
+      				coordinates_latitude = 0;
+      			else
+      				coordinates_latitude = req.body.coordinates_latitude;
+      			if(req.body.coordinates_longitude === undefined || req.body.coordinates_longitude === null)
+      				coordinates_longitude = 0;
+      			else
+      				coordinates_longitude = req.body.coordinates_longitude;
+
 	      		var sculpture_object = {
 					sculpture_name: req.body.sculpture_name,
-					video: req.body.video,
-					audio: req.body.audio,
-					image: req.body.image,
+					//video: req.body.video,
+					//audio: req.body.audio,
+					//image: req.body.image,
 					active: req.body.active,
-					coordinates_latitude: req.body.coordinates_latitude,
-					coordinates_longitude: req.body.coordinates_longitude,
+					coordinates_latitude: coordinates_latitude,
+					coordinates_longitude: coordinates_longitude,
 					artist: req.body.artist,
 					artist_statement: req.body.artist_statement, 
 					type: req.body.type, 
-					number: req.body.number
+					number: number, 
+					location: req.body.location
 				};
 				console.log("Created new sculpture object");
 				var sculpture = new Sculpture(sculpture_object);
@@ -42,15 +58,17 @@ router.post('/', function(req, res, next){
 				//Create a new entry if no matching name found, otherwise update existing one
 				var conditions = {sculpture_name:req.body.sculpture_name};
 				var update = {$set: { active:req.body.active, 
-						video: req.body.video,
-						image: req.body.image,
-						audio: req.body.audio,
-						coordinates_latitude: req.body.coordinates_latitude,
-						coordinates_longitude: req.body.coordinates_longitude,
+						//video: req.body.video,
+						//image: req.body.image,
+						//audio: req.body.audio,
+						coordinates_latitude: coordinates_latitude,
+						coordinates_longitude: coordinates_longitude,
 						artist: req.body.artist,
 						artist_statement: req.body.artist_statement, 
 						type: req.body.type,
-						number: req.body.number
+						number: number,
+						location: req.body.location
+
 						}
 					};
 				var options = {upsert: true, new: true};
@@ -93,20 +111,36 @@ router.post('/edit', function(req, res, next){
 	      if (err) {
 	        return res.json({ success: false, message: 'Failed to authenticate token.' });    
 	      } else {
+	      		var number, coordinates_longitude, coordinates_latitude;
+
+	      		if(req.body.number === undefined || req.body.number === null)
+	      			number = 0;
+	      		else
+	      			number = req.body.number;
+      			if(req.body.coordinates_latitude === undefined || req.body.coordinates_latitude === null)
+      				coordinates_latitude = 0;
+      			else
+      				coordinates_latitude = req.body.coordinates_latitude;
+      			if(req.body.coordinates_longitude === undefined || req.body.coordinates_longitude === null)
+      				coordinates_longitude = 0;
+      			else
+      				coordinates_longitude = req.body.coordinates_longitude;
+
 				//Create a new entry if no matching name found, otherwise update existing one
-				console.log("got into edit");
 				var update = {$set: { 
 						sculpture_name: req.body.sculpture_name,
 						active:req.body.active, 
-						video: req.body.video,
-						image: req.body.image,
-						audio: req.body.audio,
-						coordinates_latitude: req.body.coordinates_latitude,
-						coordinates_longitude: req.body.coordinates_longitude,
+						//video: req.body.video,
+						//image: req.body.image,
+						//audio: req.body.audio,
+						coordinates_latitude: coordinates_latitude,
+						coordinates_longitude: coordinates_longitude,
 						artist: req.body.artist,
 						artist_statement: req.body.artist_statement, 
 						type: req.body.type,
-						number: req.body.number
+						number: number,
+						location: req.body.location
+
 						}
 					};
 				var options = {upsert: false, new: true};

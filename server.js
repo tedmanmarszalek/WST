@@ -54,13 +54,13 @@ var advertisements_router = require('./routes/Advertisements.js');
 var locations_router = require('./routes/Locations.js');
 var setup_router = require('./routes/Setup.js');
 
-app.use('/auth', auth_router)
-app.use('/sculpture', sculpture_router)
-app.use('/upload', upload_router);
-app.use('/types', types_router);
-app.use('/setup', setup_router);
-app.use('/advertisements', advertisements_router);
-app.use('/locations', locations_router);
+app.use('/api/auth', auth_router)
+app.use('/api/sculpture', sculpture_router)
+app.use('/api/upload', upload_router);
+app.use('/api/types', types_router);
+app.use('/api/setup', setup_router);
+app.use('/api/advertisements', advertisements_router);
+app.use('/api/locations', locations_router);
 
 // uncomment for local testing
 app.listen(port);

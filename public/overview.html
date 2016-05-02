@@ -28,7 +28,7 @@
 
     app.factory('sculptureListFactory', function($http){
       var getData = function(){
-        return $http.get("/sculpture").then(function(result){
+        return $http.get("/api/sculpture").then(function(result){
           return result.data;
         });  
       }
@@ -43,12 +43,10 @@
       var sculpturePromise = sculptureListFactory.getData();
 
       sculpturePromise.then(function(result) {
-        console.log("promise completed");
         var data = result;
         iconNumber = 1;
         for(var i = 0; i < data.length; i++){
           if(data[i].active){
-            console.log("pushing" + data[i].sculpture_name + "to sculptures");
             var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: iconNumber}
             $scope.sculptures.push(newSculpture); 
             iconNumber++;
@@ -72,7 +70,7 @@
           addMarkers(myArr);
         }
       };
-      xmlHttp.open("GET", "/sculpture", true);
+      xmlHttp.open("GET", "/api/sculpture", true);
       xmlHttp.send();
       iconNum = 1;
       function addMarkers(arr){

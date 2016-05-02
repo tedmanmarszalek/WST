@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sculptures List</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
@@ -15,7 +14,7 @@
 
     app.factory('sculptureListFactory', function($http){
       var getData = function(){
-        return $http.get("/sculpture").then(function(result){
+        return $http.get("/api/sculpture").then(function(result){
           return result.data;
         });  
       }
@@ -28,6 +27,8 @@
         if(sessionStorage.getItem('token') === null){
            $window.location = "login.html";
         }
+        document.title = sessionStorage.getItem('moduleToEdit') + "s List";
+
       };
 
       init();
@@ -35,13 +36,29 @@
       $scope.sculptures = [];
       $scope.searchString = "";
       $scope.message = "";
+      $scope.type = sessionStorage.getItem('moduleToEdit') + " At " + sessionStorage.getItem('locationToEdit');
 
       var sculpturePromise = sculptureListFactory.getData();
 
       sculpturePromise.then(function(result) {
         var data = result;
         for(var i = 0; i < data.length; i++){
-          $scope.sculptures.push(data[i]); 
+          console.log(data[i]);
+          if(sessionStorage.getItem('moduleToEdit') === 'All' && sessionStorage.getItem('locationToEdit') === 'All'){
+      	  	$scope.sculptures.push(data[i]); 
+          }
+          else if(sessionStorage.getItem('moduleToEdit') === 'All' && sessionStorage.getItem('locationToEdit') !== 'All'){
+          	if(data[i].location === sessionStorage.getItem('locationToEdit')){
+          		$scope.sculptures.push(data[i]);
+          	}
+          }
+   	      else if(sessionStorage.getItem('moduleToEdit') !== 'All' && sessionStorage.getItem('locationToEdit') === 'All'){
+          	if(data[i].type === sessionStorage.getItem('typeToEdit')){
+          		$scope.sculptures.push(data[i]);
+          	}
+          }
+          else if(data[i].type === sessionStorage.getItem('moduleToEdit') && data[i].location === sessionStorage.getItem('locationToEdit'))
+              $scope.sculptures.push(data[i]); 
         }
       });
 
@@ -54,11 +71,11 @@
         if (confirm("Are you sure you want to delete?") == true) {
 
           var sculptureToDelete = {sculpture_name: sculpture_name, token: sessionStorage.getItem('token')};
-          $http.post('/upload/delete', sculptureToDelete).then(function successCallback(response){
+          $http.post('/api/upload/delete', sculptureToDelete).then(function successCallback(response){
           $window.location.reload();
               if(response.data.success === true){
                 $scope.message = "Sculpture Deleted";
-               $window.location.reload();
+               	$window.location.reload();
               }
               else {
                 $window.location.reload();
@@ -75,9 +92,8 @@
     }
 
     $scope.edit = function(sculpture_name){
-      console.log(sculpture_name);
       sessionStorage.setItem('sculptureToEdit', sculpture_name);    
-      $window.location = "edit_sculpture.html";
+      $window.location = "edit_object.html";
     }
 
     });
@@ -89,11 +105,11 @@
 
     <div class="row" style="padding-top:50px;">
       <div class="col-md-7 col-md-offset-2">
-        <p style="font-size:48px; padding-bottom:20px;">Sculptures List</p>
+        <p style="font-size:48px; padding-bottom:20px;"> {{type}} </p>
       </div>
     </div>
 
-    <div class="col-md-8 col-md-offset-1">
+    <div class="col-md-8 col-md-offset-2">
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon" id="sizing-addon2" style="padding-right:30px;"><b>Search</b></span>
@@ -103,10 +119,7 @@
       </div>
     </div>
 
-    <div style="padding-top:2px; font-size:20px;"><a href="add_sculpture.html"> Add a new sculpture </a></div>
-
-
-    <div class="container col-md-offset-1">
+    <div class="container col-md-offset-2">
       <table class = "table">
         <thead>
           <tr>

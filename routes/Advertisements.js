@@ -76,22 +76,25 @@ router.post('/', fields, function(req, res, next){
 	      if (err) {
 	        return res.json({ success: false, message: 'Failed to authenticate token.' });    
 	      } else {
-	      		console.log("got into post");
-				var image = {
-					name: req.body.name,
-					path: "/uploads/" + req.file.filename,
-					active: true
-				};
-				var advert_file = new Advertisement(image);
+	      		if(req.file !== undefined){
+					var image = {
+						name: req.body.name,
+						path: "/uploads/" + req.file.filename,
+						active: true
+					};
+					var advert_file = new Advertisement(image);
 
-				advert_file.save(function(err, result){
-					if(err){
-						console.log(err);
-						res.send(err);
-					} 
-				});
+					advert_file.save(function(err, result){
+						if(err){
+							console.log(err);
+							res.send(err);
+						} 
+					});
+				}
+				else{}
 
-			res.send("OK");
+				res.send("OK");
+
 	      }
 	    });
 
@@ -108,4 +111,42 @@ router.post('/', fields, function(req, res, next){
 
 });
  
+ router.post('/toggle', fields, function(req, res, next){
+	var token = req.body.token;
+
+	if (token) {
+	    // verifies secret and checks exp
+	    jwt.verify(token, 'UPDSECRET', function(err, decoded) {      
+	      if (err) {
+	        return res.json({ success: false, message: 'Failed to authenticate token.' });    
+	      } else {
+	      		console.log(req.body.id);
+				var update = {$set: { active:req.body.active } };
+				var options = {new: true};
+				Advertisement.findByIdAndUpdate(req.body.id, update, options,
+					function(err, result){
+						if(err){
+							console.log(err);
+							res.send(err);
+						} else {
+							console.log("result is " + result);
+							console.log("Success");
+						}
+					}
+				);				
+				res.send("OK");
+	      }
+	    });
+
+	  } else {
+	    // if there is no token
+	    // return an error
+	    return res.status(403).send({ 
+	        success: false, 
+	        message: 'No token provided.' 
+	    });
+	    
+	  }
+
+});
 module.exports = router;

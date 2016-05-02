@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Edit Selection </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+<script>
+var app = angular.module('addSculpture', []);
+
+app.factory('moduleFactory', function($http){
+  var getData = function(){
+    return $http.get("/api/types").then(function(result){
+      return result.data;
+    });  
+  }
+
+  return { getData: getData };
+});
+
+app.factory('locationFactory', function($http){
+  var getData = function(){
+    return $http.get("/api/locations").then(function(result){
+      return result.data;
+    });  
+  }
+
+  return { getData: getData };
+});
+
+app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory, locationFactory) {
+  
+  var init = function () {
+    if(sessionStorage.getItem('token') === null){
+       $window.location = "login.html";
+    }
+  };
+
+  init();
+
+  $scope.token = sessionStorage.getItem('token');
+  $scope.name = '';
+  
+  var allObject = {_id: 0, name: "All"};
+  $scope.types = [allObject];
+  $scope.locations = [allObject];
+
+  $scope.selectedLocation = allObject;
+  $scope.selectedType = allObject;
+
+  var modulePromise = moduleFactory.getData();
+  modulePromise.then(function(result) {
+    var data = result;
+    for(var i = 0; i < data.length; i++){
+      $scope.types.push(data[i]); 
+    }
+  });
+
+  var locationPromise = locationFactory.getData();
+  locationPromise.then(function(result) {
+    var data = result;
+    for(var i = 0; i < data.length; i++){
+      $scope.locations.push(data[i]); 
+    }
+  });
+
+  $scope.select = function(){
+    sessionStorage.setItem('moduleToEdit', $scope.selectedType);
+    sessionStorage.setItem('locationToEdit', $scope.selectedLocation);
+    $window.location = "list_objects.html";
+  }
+
+  $scope.selectedLocation = allObject;
+  $scope.selectedType = allObject;
+
+});
+</script>
+
+<body ng-app="addSculpture" ng-controller="AddSculptCtrl" style="overflow-x:hidden">
+
+    <div class="row" style="padding-top:50px;">
+        <div class="col-md-7 col-md-offset-2">
+      <p style="font-size:40px; padding-bottom:20px;">Select Module:</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7 col-md-offset-2">
+      <p style="font-size:32px;">Current Modules</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7 col-md-offset-2">
+
+        <label for="typebox"> Select a Module </label><br>
+        <select style="height:20px;" name="typebox" id="typebox" ng-model="selectedType">
+          <option ng-repeat="type in types" value={{type.name}}>{{type.name}}</option>
+        </select><br>
+        <br>
+        <label for="typebox"> Select a Location </label><br>
+        <select style="height:20px;" size="" name="typebox" id="typebox" ng-model="selectedLocation">
+          <option ng-repeat="location in locations" value={{location.name}}>{{location.name}}</option>
+        </select><br>
+        <br>
+        <button type="button" class="btn btn-primary" ng-click="select()">Go</button>
+      </div>
+    </div>
+
+    <div class="container col-md-offset-2">
+    <p style="font-size:32px; padding-top:40px;"><a href="add_object.html">Add a new object</a></p>
+    </div>
+    <div class="container col-md-offset-2">
+    <p style="font-size:32px;"><a href="modules.html">Edit Modules</a></p>
+    </div>
+    <div class="container col-md-offset-2">
+    <p style="font-size:32px;"><a href="locations.html">Edit Locations</a></p>
+    </div>
+    <div class="container col-md-offset-2">
+    <p style="font-size:32px;"><a href="advertisements.html">Edit Advertisements</a></p>
+    </div>
+
+</body>
+</html>

@@ -12,8 +12,7 @@ var app = angular.module('addSculpture', []);
 
 app.factory('moduleFactory', function($http){
   var getData = function(){
-    console.log("got into factory");
-    return $http.get("/locations").then(function(result){
+    return $http.get("/api/locations").then(function(result){
       return result.data;
     });  
   }
@@ -52,7 +51,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
         token: sessionStorage.getItem('token')
       };
 
-    $http.post('/locations', type).then(function successCallback(response){
+    $http.post('/api/locations', type).then(function successCallback(response){
         if(response.data.success === true){
           $scope.message = "Location Added";
         }
@@ -70,11 +69,10 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
 
     $scope.delete = function(type_id){
 
-      console.log(type_id);
       if (confirm("Are you sure you want to delete?") == true) {
 
         var typeToDelete = {id: type_id, token: sessionStorage.getItem('token')};
-        $http.post('/locations/delete', typeToDelete).then(function successCallback(response){
+        $http.post('/api/locations/delete', typeToDelete).then(function successCallback(response){
         $window.location.reload();
             if(response.data.success === true){
               $scope.message = "Location Deleted";

@@ -29,7 +29,7 @@
     var app = angular.module('list_sculptures', []);
     app.factory('sculptureListFactory', function($http){
       var getData = function(){
-        return $http.get("/sculpture").then(function(result){
+        return $http.get("/api/sculpture").then(function(result){
           return result.data;
         });  
       }
@@ -70,7 +70,7 @@
           addMarkers(myArr);
         }
       };
-      xmlHttp.open("GET", "/sculpture", true);
+      xmlHttp.open("GET", "/api/sculpture", true);
       xmlHttp.send();
       function addMarkers(arr){
         for(i = 0; i < arr.length; i++) {

@@ -11,7 +11,7 @@ var app = angular.module('addSculpture', []);
 
     app.factory('sculptureListFactory', function($http){
       var getData = function(){
-        return $http.get("/sculpture").then(function(result){
+        return $http.get("/api/sculpture").then(function(result){
           return result.data;
         });  
       }
@@ -21,7 +21,17 @@ var app = angular.module('addSculpture', []);
 
      app.factory('typesListFactory', function($http){
       var getData = function(){
-        return $http.get("/types").then(function(result){
+        return $http.get("/api/types").then(function(result){
+          return result.data;
+        });  
+      }
+
+      return { getData: getData };
+    });
+
+    app.factory('locationsListFactory', function($http){
+      var getData = function(){
+        return $http.get("/api/locations").then(function(result){
           return result.data;
         });  
       }
@@ -31,7 +41,7 @@ var app = angular.module('addSculpture', []);
    
 
 
-app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListFactory, typesListFactory) {
+app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListFactory, typesListFactory, locationsListFactory) {
   
   var init = function () {
     if(sessionStorage.getItem('token') === null){
@@ -57,6 +67,8 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
   $scope.token = sessionStorage.getItem('token');
   $scope.types = [];
   $scope.selectedType = "";
+  $scope.locations = [];
+  $scope.selectedLocation = "";
   $scope.number;
   $scope.type;
   $scope.id;
@@ -79,18 +91,15 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
     else{
       document.title = "Editing " + sculpture.sculpture_name;
       $scope.sculpture_name = sculpture.sculpture_name;
-      $scope.video = sculpture.video;
-      $scope.image = sculpture.image;
-      $scope.audio = sculpture.audio;
       $scope.active = sculpture.active;
       $scope.coordinates_latitude = sculpture.coordinates_latitude;
       $scope.coordinates_longitude = sculpture.coordinates_longitude;
       $scope.artist = sculpture.artist;
       $scope.artist_statement = sculpture.artist_statement;
       $scope.number = sculpture.number; 
-      $scope.type = sculpture.type
+      $scope.selectedType = sculpture.type
+      $scope.selectedLocation = sculpture.location
       $scope.id = sculpture._id;
-      console.log($scope.id);
     }
   });
 
@@ -102,25 +111,34 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
       }
     });
 
+  var locationsPromise = locationsListFactory.getData();
+  locationsPromise.then(function(result) {
+      var data = result;
+      for(var i = 0; i < data.length; i++){
+        $scope.locations.push(data[i]); 
+      }
+    });
+
   $scope.submit = function(event){
-    event.preventDefault();    
+    //event.preventDefault();    
     var sculpture = { 
       selectedId: $scope.id,
       sculpture_name: $scope.sculpture_name, 
-      video: $scope.video,
-      image: $scope.image,
-      audio: $scope.audio,
+      //video: $scope.video,
+      //image: $scope.image,
+      //audio: $scope.audio,
       active: $scope.active,
       coordinates_latitude: $scope.coordinates_latitude,
       coordinates_longitude: $scope.coordinates_longitude,
       artist: $scope.artist,
       artist_statement: $scope.artist_statement,
+      location: $scope.selectedLocation,
       type: $scope.selectedType,
       token: sessionStorage.getItem('token'),
       number: $scope.number
     };
 
-    $http.post('/sculpture/edit', sculpture).then(function successCallback(response){
+    $http.post('/api/sculpture/edit', sculpture).then(function successCallback(response){
         if(response.data.success === true){
           $scope.message = "Edit Success";
         }
@@ -186,10 +204,14 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
         <label for="typebox"> Type </label><br> 
         <select name="typebox" id="typebox" ng-model="selectedType">
           <option ng-repeat="type in types" value={{type.name}}>{{type.name}}</option> 
+        </select> <br><br>
+
+        <label for="typebox"> Location </label><br> 
+        <select name="typebox" id="typebox" ng-model="selectedLocation">
+          <option ng-repeat="location in locations" value={{location.name}}>{{location.name}}</option> 
         </select> <br>
 
-
-         <form ng-submit="" action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+         <form ng-submit="" action="http://localhost:8080/api/upload" method="post" enctype="multipart/form-data">
 
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
              <label for="image">Add Image</label> <input type="file" name="image">
@@ -198,7 +220,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
              <label for="audio">Add Audio</label> <input type="file" name="audio">
             </div></div>
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
-             <label for="audio">Add Video</label> <input type="file" name="audio">
+             <label for="audio">Add Video</label> <input type="file" name="video">
             </div></div>
 
             <input type="hidden" name="sculpture_name" value="{{ sculpture_name }}">

@@ -12,8 +12,17 @@ var app = angular.module('addSculpture', []);
 
 app.factory('addSculptureFactory', function($http){
   var getData = function(){
-    console.log("got into factory");
-    return $http.get("/types").then(function(result){
+    return $http.get("/api/types").then(function(result){
+      return result.data;
+    });  
+  }
+
+  return { getData: getData };
+});
+
+app.factory('addLocationFactory', function($http){
+  var getData = function(){
+    return $http.get("/api/locations").then(function(result){
       return result.data;
     });  
   }
@@ -22,7 +31,7 @@ app.factory('addSculptureFactory', function($http){
 });
 
 
-app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFactory) {
+app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFactory, addLocationFactory) {
   
   var init = function () {
     if(sessionStorage.getItem('token') === null){
@@ -46,8 +55,10 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
   $scope.videoLink = "";
   $scope.token = sessionStorage.getItem('token');
   $scope.types = [];
+  $scope.locations = [];
   $scope.selectedType = '';
   $scope.number;
+  $scope.location;
 
   var sculpturePromise = addSculptureFactory.getData();
   sculpturePromise.then(function(result) {
@@ -57,23 +68,31 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
       }
     });
 
+  var locationPromise = addLocationFactory.getData();
+  locationPromise.then(function(result) {
+      var data = result;
+      for(var i = 0; i < data.length; i++){
+        $scope.locations.push(data[i]); 
+      }
+    });
+
   $scope.submit = function(event){
-    event.preventDefault();    
+    //event.preventDefault();    
     var sculpture = { 
               sculpture_name: $scope.sculpture_name, 
-    				  video: $scope.video,
-    				  image: $scope.image,
-    				  audio: $scope.audio,
     				  active: $scope.active,
     				  coordinates_latitude: $scope.coordinates_latitude,
               coordinates_longitude: $scope.coordinates_longitude,
     				  artist: $scope.artist,
     				  artist_statement: $scope.artist_statement,
               token: sessionStorage.getItem('token'),
-              number: $scope.number
+              number: $scope.number,
+              location: $scope.selectedLocation,
+              type: $scope.selectedType
+
     				};
 
-    $http.post('/sculpture', sculpture).then(function successCallback(response){
+    $http.post('/api/sculpture', sculpture).then(function successCallback(response){
         if(response.data.success === true){
          	$scope.message = "Sculpture Added";
         }
@@ -142,7 +161,12 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
           <option ng-repeat="type in types" value={{type.name}}>{{type.name}}</option>
         </select><br>
 
-      <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+        <label for="typebox"> Location </label><br>
+        <select name="typebox" id="typebox" ng-model="selectedLocation">
+          <option ng-repeat="location in locations" value={{type.name}}>{{location.name}}</option>
+        </select><br>
+
+      <form action="http://localhost:8080/api/upload" method="post" enctype="multipart/form-data">
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
              <label for="image">Add Image</label> <input type="file" name="image">
             </div></div>

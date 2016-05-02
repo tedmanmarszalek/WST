@@ -12,8 +12,7 @@ var app = angular.module('addSculpture', []);
 
 app.factory('moduleFactory', function($http){
   var getData = function(){
-    console.log("got into factory");
-    return $http.get("/advertisements").then(function(result){
+    return $http.get("/api/advertisements").then(function(result){
       return result.data;
     });  
   }
@@ -45,11 +44,10 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
 
   $scope.delete = function(type_id){
 
-    console.log(type_id);
     if (confirm("Are you sure you want to delete?") == true) {
 
       var typeToDelete = {id: type_id, token: sessionStorage.getItem('token')};
-      $http.post('/advertisements/delete', typeToDelete).then(function successCallback(response){
+      $http.post('/api/advertisements/delete', typeToDelete).then(function successCallback(response){
       $window.location.reload();
           if(response.data.success === true){
             $scope.message = "Advertisement Deleted";
@@ -69,6 +67,15 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
     else {}
   }
 
+  $scope.toggle = function(oid, status){
+    var typeToDelete = {id: oid, token: sessionStorage.getItem('token'), active: status};
+    $http.post('/api/advertisements/toggle', typeToDelete).then(function successCallback(response){
+      $window.location.reload();
+      }, function errorCallback(response){
+        console.log("error");
+      });
+  }
+
 });
 </script>
 
@@ -86,7 +93,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
         <input class="form-control" id="name" type="text" ng-model="name" placeholder="Advertisement Name">
       </div>
 
-      <form action="http://localhost:8080/advertisements" method="post" enctype="multipart/form-data">
+      <form action="http://localhost:8080/api/advertisements" method="post" enctype="multipart/form-data">
             <div class="form-group"style="padding-top:10px;"> <div class="input-group">
              <label for="image">Add Image (Please only upload an image)</label> <input type="file" name="image">
             </div></div>
@@ -121,6 +128,13 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
             <td style="padding-top:12px; font-size:40px;"> {{ advertisement.name }} 
               <p>
               <button type="button" class="btn btn-danger btn-lg" ng-click="delete(advertisement._id)">Delete</button>
+              <div ng-show=advertisement.active>
+                <button type="button" class="btn btn-primary btn-lg" ng-click="toggle(advertisement._id, false)">Deactivate</button>
+              </div>
+              <div ng-show=!advertisement.active>
+                <button type="button" class="btn btn-primary btn-lg" ng-click="toggle(advertisement._id, true)">Activate</button>
+              </div>
+
               </p>
             </td>
             <td>

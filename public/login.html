@@ -22,10 +22,10 @@ app.controller('LoginCtrl', function ($scope, $http, $window) {
                 password: $scope.password
                };
 
-    $http.post('/auth', user).then(function successCallback(response){
+    $http.post('/api/auth', user).then(function successCallback(response){
       var token = response.data.token;
       sessionStorage.setItem('token', token);
-      $window.location = "list_sculptures.html";
+      $window.location = "edit_selection.html";
     }, function errorCallback(response){
       console.log("error");
     });

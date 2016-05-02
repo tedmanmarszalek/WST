@@ -13,7 +13,8 @@ var SculptureSchema = new Schema({
 	artist: {type: String},
 	artist_statement: {type: String},
 	type: {type: String}, 
-	number: {type: Number}
+	number: {type: Number}, 
+	location: {type: String}
 }, {versionKey: false});
 
 mongoose.model('Sculpture', SculptureSchema);
