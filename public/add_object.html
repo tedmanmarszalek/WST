@@ -86,7 +86,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
     				  artist: $scope.artist,
     				  artist_statement: $scope.artist_statement,
               token: sessionStorage.getItem('token'),
-              number: $scope.number,
               location: $scope.selectedLocation,
               type: $scope.selectedType
 
@@ -134,18 +133,13 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFa
         </div>
 
         <div class="form-group">
-          <label for="name">Artist</label>
+          <label for="name">Artist/Description 1</label>
           <input class="form-control" id="name" type="text" ng-model="artist" placeholder="Artist Name">
         </div>
 
         <div class="form-group">
-          <label for="name">Artist Statement/Information</label>
+          <label for="name">Artist Statement/Description 2</label>
           <input class="form-control" id="name" type="text" ng-model="artist_statement" placeholder="Artist Statement">
-        </div>
-
-        <div class="form-group">
-          <label for="name">Number</label>
-          <input class="form-control" id="Number" type="text" ng-model="number" placeholder="Number">
         </div>
 
         <div class="form-group">
