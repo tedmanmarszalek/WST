@@ -69,7 +69,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
   $scope.selectedType = "";
   $scope.locations = [];
   $scope.selectedLocation = "";
-  $scope.number;
   $scope.type;
   $scope.id;
 
@@ -96,7 +95,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
       $scope.coordinates_longitude = sculpture.coordinates_longitude;
       $scope.artist = sculpture.artist;
       $scope.artist_statement = sculpture.artist_statement;
-      $scope.number = sculpture.number; 
       $scope.selectedType = sculpture.type
       $scope.selectedLocation = sculpture.location
       $scope.id = sculpture._id;
@@ -135,7 +133,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
       location: $scope.selectedLocation,
       type: $scope.selectedType,
       token: sessionStorage.getItem('token'),
-      number: $scope.number
     };
 
     $http.post('/api/sculpture/edit', sculpture).then(function successCallback(response){
@@ -186,11 +183,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, sculptureListF
         <div class="form-group">
           <label for="Statement">Artist Statement</label>
           <input class="form-control" id="Statement" type="text" ng-model="artist_statement">
-        </div>
-
-        <div class="form-group">
-          <label for="Statement">Number</label>
-          <input class="form-control" id="Statement" type="text" ng-model="number">
         </div>
 
         <div class="form-group">
