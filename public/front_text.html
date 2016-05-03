@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Add Module </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+<script>
+var app = angular.module('addSculpture', []);
+
+app.factory('moduleFactory', function($http){
+  var getData = function(){
+    return $http.get("/api/intro").then(function(result){
+      return result.data;
+    });  
+  }
+
+  return { getData: getData };
+});
+
+app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory) {
+  
+  var init = function () {
+    if(sessionStorage.getItem('token') === null){
+       $window.location = "login.html";
+    }
+  };
+
+  init();
+
+  $scope.token = sessionStorage.getItem('token');
+  $scope.fronttext1 = 'Loading...';
+  $scope.fronttext2 = 'Loading...';
+
+
+  var modulePromise = moduleFactory.getData();
+  modulePromise.then(function(result) {
+    $scope.fronttext1 = result[1].text; 
+    $scope.fronttext2 = result[2].text; 
+  });
+
+  $scope.submit = function(){
+      var textobj1 = { 
+        text: $scope.fronttext1,
+        token: sessionStorage.getItem('token'), 
+        id: "57291b021cd24c3c4aa39ea8"
+    	};
+
+      var textobj2 = { 
+        text: $scope.fronttext2,
+        token: sessionStorage.getItem('token'), 
+        id: "57291e0a963a16a80d78fef0"
+      };
+
+    $http.post('/api/intro', textobj1).then(function successCallback(response){
+        if(response.data.success === true){
+         	$scope.message = "Module Added";
+        }
+        else {
+          $scope.message = "error";
+        }
+
+    }, function errorCallback(response){
+      console.log("error");
+    });
+
+    $http.post('/api/intro', textobj2).then(function successCallback(response){
+        if(response.data.success === true){
+          $scope.message = "Module Added";
+        }
+        else {
+          $scope.message = "error";
+        }
+
+    }, function errorCallback(response){
+      console.log("error");
+    });
+
+    $window.location.reload();
+
+  }
+  
+
+});
+</script>
+
+<body ng-app="addSculpture" ng-controller="AddSculptCtrl" style="overflow-x:hidden">
+
+    <div class="row" style="padding-top:50px;">
+        <div class="col-md-7 col-md-offset-2">
+      <p style="font-size:40px; padding-bottom:20px;">Change Introduction</p>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2">
+      <div class="form-group">
+        <label for="name">Intro Text</label>
+        <textarea style="height: 200px;" class="form-control" id="encHt"ng-model="fronttext1"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Intro Text</label>
+        <textarea style="height: 200px;" class="form-control" id="encHt"ng-model="fronttext2"></textarea>
+      </div>
+
+      <p style="padding-top:12px;">
+      <button type="submit" class="btn btn-primary" ng-click="submit()">Submit</button>
+
+      <p style="font-size:20px; padding-top:10px; color:red;"> {{ message }} </p>
+    </div>
+
+
+</body>
+</html>
