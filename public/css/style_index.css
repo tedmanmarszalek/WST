@@ -3,6 +3,8 @@ html, body
 	width: 100%;
 	height: 100%;
   	padding-top: 10px;
+  	overflow-x:hidden;
+  	padding-bottom: 10px;
 }
 
 #welcome
@@ -21,8 +23,6 @@ html, body
 {
     display: none;
     float: left;
-
-    /** WST specifications **/
     height: 300px;
     min-height: 1px;
 }
@@ -30,8 +30,6 @@ html, body
 .slick-slide img
 {
     display: block;
-
-    /** WST specifications **/
     height: 300px;
     width: 500px;
     margin : 10px;
@@ -39,8 +37,10 @@ html, body
 
 .top-img
 {
-	height: 125px;
-	width: 500px;
+	height: 113px;
+	width: 558px;
+	display: block;
+    margin: 0 auto;
 }
 
 /** Mobile specifications **/
@@ -52,12 +52,15 @@ html, body
 		width: 100%;
 		height: 100%;
 	  	padding-top: 10px;
+	  	overflow-x:hidden;
 	}
 	
 	.top-img
 	{
+		height: 64px;
 		width: 250px;
-    	height: 64px;
+		display: block;
+    	margin: 0 auto;
 	}
 
 	.slick-slider
