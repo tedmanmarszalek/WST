@@ -32,12 +32,18 @@ html, body
 
 .start-tour-btn
 {
-	width:400px
+	width:400px;
 }
+
+.btn-primary
+{
+	width:400px;
+}
+
 
 #typebox
 {
-	width:400px
+	width:400px;
 }
 
 
@@ -59,7 +65,7 @@ html, body
 		width:40px;
 		height:40px;
 		top:30px;
-		left:5px
+		left:0px
 	}
 
 	.top-img
@@ -71,6 +77,11 @@ html, body
 	}
 
 	.start-tour-btn
+	{
+		width: 95%;
+	}
+
+	.btn-primary
 	{
 		width: 95%;
 	}
@@ -90,4 +101,5 @@ html, body
 		height: 50px;
 		width: 95%;
 	}
+
 }
