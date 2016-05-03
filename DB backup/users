@@ -1,1 +1,3 @@
-{"_id":{"$oid":"56fdc485d06e97602639a316"},"name":"updadmin","password":"updadmin"}
+{"_id":{"$oid":"56fdc485d06e97602639a316"},"name":"updadmin","password":"@UPDWST123"}
+{"_id":{"$oid":"57200aa35633357c28001f3d"},"name":"updadmin","password":"updadmin"}
+{"_id":{"$oid":"57200aae5633357c28001f3e"},"name":"updadmin","password":"updadmin"}

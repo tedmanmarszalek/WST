@@ -18,6 +18,7 @@ require('./models/Users.js');
 require('./models/Types.js');
 require('./models/Advertisements.js');
 require('./models/Locations.js');
+require('./models/Intro.js');
 
 /* Database Connection */
 //To login to mlab.com to see the data in the database:
@@ -53,6 +54,7 @@ var types_router = require('./routes/Types.js');
 var advertisements_router = require('./routes/Advertisements.js');
 var locations_router = require('./routes/Locations.js');
 var setup_router = require('./routes/Setup.js');
+var intro_router = require('./routes/Intro.js');
 
 app.use('/api/auth', auth_router)
 app.use('/api/sculpture', sculpture_router)
@@ -61,6 +63,7 @@ app.use('/api/types', types_router);
 app.use('/api/setup', setup_router);
 app.use('/api/advertisements', advertisements_router);
 app.use('/api/locations', locations_router);
+app.use('/api/intro', intro_router);
 
 // uncomment for local testing
 app.listen(port);

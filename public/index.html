@@ -11,6 +11,8 @@
       <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
       <script src="js/bootstrap.js"></script>
       <script type="text/javascript" src="js/slick/slick.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+
 
       <!-- Carousel -->
       <script type="text/javascript">
@@ -30,9 +32,36 @@
           });
       </script>
 
+      <script>
+      var app = angular.module('addSculpture', []);
+
+      app.factory('moduleFactory', function($http){
+        var getData = function(){
+          return $http.get("/api/intro").then(function(result){
+            return result.data;
+          });  
+        }
+
+        return { getData: getData };
+      });
+
+      app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory) {
+        
+        $scope.fronttext1 = "";
+        $scope.fronttext2 = "";
+
+        var modulePromise = moduleFactory.getData();
+        modulePromise.then(function(result) {
+          $scope.fronttext1 = result[1].text; 
+          $scope.fronttext2 = result[2].text; 
+        });
+
+      });
+      </script>
+
   </head>
 
-  <body ng-app="list_sculptures" ng-controller="SculptureListCtrl">
+  <body ng-app="addSculpture" ng-controller="AddSculptCtrl">
 
     <img class="top-img" src="img/UPD.jpg" >
 
@@ -68,10 +97,10 @@
     <div class="col-lg-12 text-center"> 
       <div class="container" id="welcome" name="welcome">
         <p align="left" class="paragraph">
-        Welcome to the Wandell Sculpture Garden, open daily sunrise to sunset and free to the public. The garden opened in 1999. An initial gift from the Celia and Willet Wandell Family made it possible to install 10 sculptures that were on loan from the artist. Since then many others have helped the district purchase grow the collection. Most of the exhibits remain pieces that are on two-year loan from the artist and are available for purchase.
-        <br> <br>
-        This tour will help you explore each piece and learn more about the artists who created them. Just click start to begin.
-        </p>  
+          {{ fronttext1 }} 
+          <br><br>
+          {{ fronttext2 }}
+        </p>
       </div> 
       <br>
       <a href="tour_options.html"><button type="button" class="btn btn-success start-tour-btn">Select Tour</button></a>
