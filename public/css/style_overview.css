@@ -70,8 +70,8 @@ html, body
 #ad-modal
 {
 	position:absolute;
-	left:25%;
-	top:20%;
+	left:17%;
+	top:10%;
 }
 
 .instruction
@@ -159,8 +159,10 @@ html, body
 	#ad-modal
 	{
 		position:absolute;
-		left:20%;
-		top:20%;
+		left:5%;
+		top:10%;
+		width: 20px;
+		height: 20px;
 	}
 
 	.white-container
@@ -169,5 +171,4 @@ html, body
 		width:100%;
 		margin: 0 auto;
 	}
-
 }
