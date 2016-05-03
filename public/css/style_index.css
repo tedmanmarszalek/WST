@@ -39,8 +39,8 @@ html, body
 
 .top-img
 {
-	height: 125px;
-	width: 500px;
+	height: 113px;
+	width: 558px;
 }
 
 /** Mobile specifications **/
@@ -56,8 +56,8 @@ html, body
 	
 	.top-img
 	{
-		width: 250px;
-    	height: 64px;
+		width: 278px;
+    	height: 57px;
 	}
 
 	.slick-slider
