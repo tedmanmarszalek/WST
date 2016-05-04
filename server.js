@@ -25,8 +25,8 @@ require('./models/Intro.js');
 //Username: urbanaparks
 //Password: UPD123
 
-//var mongodbURI = "mongodb://localhost:27017"
-var mongodbURI = "mongodb://admin:asdf@ds019698.mlab.com:19698/urbanaparkstest"
+var mongodbURI = "mongodb://localhost:27017"
+//var mongodbURI = "mongodb://admin:asdf@ds019698.mlab.com:19698/urbanaparkstest"
 mongoose.connect(mongodbURI);
 console.log("Database Connected");
 

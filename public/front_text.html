@@ -33,7 +33,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
   $scope.token = sessionStorage.getItem('token');
   $scope.fronttext1 = 'Loading...';
   $scope.fronttext2 = 'Loading...';
-
+  $scope.message = "";
 
   var modulePromise = moduleFactory.getData();
   modulePromise.then(function(result) {
@@ -56,7 +56,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
 
     $http.post('/api/intro', textobj1).then(function successCallback(response){
         if(response.data.success === true){
-         	$scope.message = "Module Added";
         }
         else {
           $scope.message = "error";
@@ -68,7 +67,6 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
 
     $http.post('/api/intro', textobj2).then(function successCallback(response){
         if(response.data.success === true){
-          $scope.message = "Module Added";
         }
         else {
           $scope.message = "error";
@@ -78,6 +76,7 @@ app.controller('AddSculptCtrl', function ($scope, $http, $window, moduleFactory)
       console.log("error");
     });
 
+    $scope.message = "Success!";
     $window.location.reload();
 
   }
