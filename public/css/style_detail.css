@@ -248,10 +248,16 @@ html, body
 		padding-top:500px;
 	}
 
-	#modal
+	#modal-audio
 	{
 		width:100%;
+		height:100px;
 	}
+
+	#modal
+	{	
+		width:100%;
+	}	
 
 	#ad-modal
 	{

@@ -82,15 +82,18 @@
       xmlLocationHttp.open("GET", "/api/locations", true);
       xmlLocationHttp.send();
       function addMap(arr){
-        if(arr[0].name == location)
+	for (i = 0; i < arr.length; i++)
+	{
+        if(arr[i].name == location)
         {
           map = new google.maps.Map(mapDiv, {
-          center: {lat: arr[0].coordinates_latitude, lng: arr[0].coordinates_longitude},
+          center: {lat: arr[i].coordinates_latitude, lng: arr[i].coordinates_longitude},
           zoom: 17,
           mapTypeControl: false,
           streetViewControl: false
           }); 
         }
+	}
       }   
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.onreadystatechange = function() {
@@ -181,14 +184,14 @@
     <br>
     <br>
     
-    <div ng-if="sculpture.video !== null" class="videoExists">
+    <div ng-if="sculpture.video !== null || sculpture.video" class="videoExists">
       <a href="" onclick="openVideoModal()" role "button" data-toggle="modal"><img class="video-image" src="/img/Icons/WatchVideo.png"></a>
     </div>
 
     <br>
     <br>
 
-    <div ng-if="sculpture.audio !== null" class="audioExists">
+    <div ng-if="sculpture.audio !== null || sculpture.audio" class="audioExists">
       <a href="" onclick="openAudioModal()" role "button" data-toggle="modal"><img class="audio-image" src="/img/Icons/PlayAudio.png"></a>
       Sound Tour: Story Behind {{sculpture.sculpture_name}}
     </div>
@@ -209,7 +212,7 @@
         <h4 class="modal-title">Audio Story</h4>
       </div>
       <div class="modal-body" >
-          <audio ng-src="{{sculpture.audio}}" id="modal" controls></audio>
+          <audio ng-src="{{sculpture.audio}}" id="modal-audio" controls></audio>
       </div>
     </div>
   </div>

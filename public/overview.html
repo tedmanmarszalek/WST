@@ -118,7 +118,7 @@
       iconNum = 1;
       function addMarkers(arr){
         for(i = 0; i < arr.length; i++) {
-          if(type == "All")
+          if(type == "All" && arr[i].active && arr[i].location == location)
           {
             var marker = new google.maps.Marker({
               position: new google.maps.LatLng(arr[i].coordinates_latitude, arr[i].coordinates_longitude),
