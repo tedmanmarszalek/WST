@@ -46,7 +46,7 @@
         var data = result;
         iconNumber = 1;
         for(var i = 0; i < data.length; i++){
-          if (type == "All")
+          if (type == "All" && data[i].active && data[i].location == location)
           {
             var newSculpture = {sculpture_name: data[i].sculpture_name, video: data[i].video, image: data[i].image, audio: data[i].audio, active: data[i].active, coordinates_latitude: data[i].coordinates_latitude, coordinates_longitude: data[i].coordinates_longitude, artist: data[i].artist, artist_statement: data[i].artist_statement, number: iconNumber}
             $scope.sculptures.push(newSculpture); 
@@ -75,6 +75,8 @@
     function initMap() {
       var location = sessionStorage.getItem('tourLocation');
       var type = sessionStorage.getItem('tourType');
+	console.log(location);
+	console.log(type);
       xmlLocationHttp = new XMLHttpRequest();
       xmlLocationHttp.onreadystatechange = function() {
         if(xmlLocationHttp.readyState == 4 && xmlLocationHttp.status == 200)
@@ -88,15 +90,20 @@
       var mapDiv = document.getElementById('map');
       var map = null;
       function addMap(arr){
-        if(arr[0].name == location)
+	for(i = 0; i < arr.length; i++)
+	{
+        if(arr[i].name == location)
         {
+	  console.log(arr[i].coordinates_latitude);
+	  console.log(arr[i].coordinates_longitude);
           map = new google.maps.Map(mapDiv, {
-          center: {lat: arr[0].coordinates_latitude, lng: arr[0].coordinates_longitude},
+          center: {lat: arr[i].coordinates_latitude, lng: arr[i].coordinates_longitude},
           zoom: 17,
           mapTypeControl: false,
           streetViewControl: false
           }); 
         }
+	}
       } 
       var xmlMarkerHttp = new XMLHttpRequest();
       xmlMarkerHttp.onreadystatechange = function() {
