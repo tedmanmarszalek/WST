@@ -11,8 +11,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <script>
-    var app = angular.module('addSculpture', []);
+    var app = angular.module('addSculpture', []);//Module to be used in html below to grab angular variables defined in the controller
 
+/*Factory to get the types from the db*/
     app.factory('addSculptureFactory', function($http){
       var getData = function(){
         return $http.get("/api/types").then(function(result){
@@ -23,6 +24,7 @@
       return { getData: getData };
     });
 
+/*Factory to get the locations from the database.*/
     app.factory('addLocationFactory', function($http){
       var getData = function(){
         return $http.get("/api/locations").then(function(result){
@@ -33,12 +35,13 @@
       return { getData: getData };
     });
 
-
+/*Controller to define variables to be used in the html below*/
     app.controller('AddSculptCtrl', function ($scope, $http, $window, addSculptureFactory, addLocationFactory) {
 
-      $scope.types = [];
-      $scope.locations = [];
+      $scope.types = [];//types array to store all the types to be displayed in the drop down
+      $scope.locations = [];//locations array to store all the locations to be displayed in the drop down
 
+/*Gets all the types from the json file, adds them to the types array*/
       var sculpturePromise = addSculptureFactory.getData();
       sculpturePromise.then(function(result) {
           var data = result;
@@ -47,6 +50,7 @@
           }
         });
 
+/*Gets all the locations from the json file, adds them to the locations array*/
       var locationPromise = addLocationFactory.getData();
       locationPromise.then(function(result) {
           var data = result;
@@ -55,6 +59,7 @@
           }
         });
 
+/*Submit function to store the selected options in session variables to be used in overview.html and detail.html*/
       $scope.submit = function(){
         //event.preventDefault();
         sessionStorage.tourType = $scope.selectedType;

@@ -15,8 +15,9 @@
   <script src="js/bootstrap.js"></script>
 
   <script>
-    var app = angular.module('list_sculptures', []);
+    var app = angular.module('list_sculptures', []); //Module to be used in html below to grab angular variables defined in the controller
 
+/*Factory to get the objects from the database. Currently 'scultpures' but it works for all objects in db*/
     app.factory('sculptureListFactory', function($http){
       var getData = function(){
         return $http.get("/api/sculpture").then(function(result){
@@ -26,6 +27,8 @@
 
       return { getData: getData };
     });
+
+/*Factory to get the Advertisements from the database.*/
     app.factory('advertListFactory', function($http){
       var getData = function(){
         return $http.get("/api/advertisements").then(function(result){
@@ -34,17 +37,23 @@
       }
       return { getData: getData };
     });
+
+/*Controller to define variables to be used in the html below*/
     app.controller('SculptureListCtrl', function ($scope, sculptureListFactory, advertListFactory) {
       
-      $scope.sculptures = [];
+      $scope.sculptures = []; //object list to be added to 
       $scope.addImage = false;
       $scope.advert = null;
-      var location = sessionStorage.getItem('tourLocation');
-      var type = sessionStorage.getItem('tourType');
-      var sculpturePromise = sculptureListFactory.getData();
+      var location = sessionStorage.getItem('tourLocation'); //session variable stored from tour options page
+      var type = sessionStorage.getItem('tourType'); //session variable stored from tour options page
+      var sculpturePromise = sculptureListFactory.getData(); //gets the data using sculpture factory
+
+/*Uses the data grabbed from the daatabase to update sculptures array with correct objects based on user input from tour options page*/
       sculpturePromise.then(function(result) {
-        var data = result;
-        iconNumber = 1;
+        var data = result; //data from db pull
+        iconNumber = 1; //set first object to have iconNumber 1
+
+/*Loop through the data, compare each to user credentials, add them to sculpture list with an icon number*/
         for(var i = 0; i < data.length; i++){
           if (type == "All" && data[i].active && data[i].location == location)
           {
@@ -59,10 +68,13 @@
           }
         }
       });
+
+/*Grab the advertisements from the db to display*/
       var advertPromise = advertListFactory.getData();
       advertPromise.then(function(result) {
         console.log("promise completed");
         var data = result;
+/*If the ad is active, make the advert variable the advertisement object*/
         for(var i = 0; i < data.length; i++){
           if(data[i].active)
           {
@@ -72,11 +84,15 @@
         }
       });
     });
+
+/*Initializing the Google Maps map*/
     function initMap() {
-      var location = sessionStorage.getItem('tourLocation');
-      var type = sessionStorage.getItem('tourType');
+      var location = sessionStorage.getItem('tourLocation'); //session variable stored from tour options page. (previous one is now out of scope)
+      var type = sessionStorage.getItem('tourType'); //session variable stored from tour options page. (previous one is now out of scope)
 	console.log(location);
 	console.log(type);
+
+/*Need a get request for the locations in the database*/
       xmlLocationHttp = new XMLHttpRequest();
       xmlLocationHttp.onreadystatechange = function() {
         if(xmlLocationHttp.readyState == 4 && xmlLocationHttp.status == 200)
@@ -85,10 +101,12 @@
           addMap(myLoc);
         }
       }
-      xmlLocationHttp.open("GET", "/api/locations", true);
+      xmlLocationHttp.open("GET", "/api/locations", true); //get the json object with all the locations. (stored at /api/locations)
       xmlLocationHttp.send();
       var mapDiv = document.getElementById('map');
       var map = null;
+
+/*Function used to create a new map and use the coordinates of the grabbed location to center it*/
       function addMap(arr){
 	for(i = 0; i < arr.length; i++)
 	{
@@ -105,6 +123,8 @@
         }
 	}
       } 
+
+/*Need another get request for displaying the markers correctly on the map*/
       var xmlMarkerHttp = new XMLHttpRequest();
       xmlMarkerHttp.onreadystatechange = function() {
         if(xmlMarkerHttp.readyState == 4 && xmlMarkerHttp.status == 200) 
@@ -113,9 +133,11 @@
           addMarkers(myArr);
         }
       };
-      xmlMarkerHttp.open("GET", "/api/sculpture", true);
+      xmlMarkerHttp.open("GET", "/api/sculpture", true); //get all the objects from the db. (stored at /api/sculpture)
       xmlMarkerHttp.send();
       iconNum = 1;
+
+/*Function used to loop through all the objects, compare them to user input, and display the markers with correct icon on the Google Map*/
       function addMarkers(arr){
         for(i = 0; i < arr.length; i++) {
           if(type == "All" && arr[i].active && arr[i].location == location)
@@ -139,6 +161,8 @@
           }
         }
       }
+
+/*Updating User location on the map*/
       var person = null;
       function autoUpdateLocation() {
         if (navigator.geolocation) {
@@ -165,6 +189,8 @@
       }
       autoUpdateLocation(); 
     }
+
+/*Function called when advertisement botton is pressed*/
     function openAdvertModal(){
       $('#myAdvertModal').modal('show');
     }
