@@ -51,41 +51,15 @@ router.post('/', function(req, res, next){
 				};
 				console.log("Created new sculpture object");
 				var sculpture = new Sculpture(sculpture_object);
-
-				//Create a new entry if no matching name found, otherwise update existing one
-				var conditions = {sculpture_name:req.body.sculpture_name};
-				var update = {$set: { active:req.body.active, 
-						//video: req.body.video,
-						//image: req.body.image,
-						//audio: req.body.audio,
-						coordinates_latitude: coordinates_latitude,
-						coordinates_longitude: coordinates_longitude,
-						artist: req.body.artist,
-						artist_statement: req.body.artist_statement, 
-						type: req.body.type,
-						number: number,
-						location: req.body.location
-
-						}
-					};
-				var options = {upsert: true, new: true};
-
-				Sculpture.findOneAndUpdate(conditions, update, options,
-					function(err, result){
-						if(err){
-							console.log(err);
-							res.send(err);
-						} else {
-							console.log(result);
-							console.log("Success");
-							res.json({
-								success: true,
-								msg: ""
-							});
-						}
+				sculpture.save(function (err) {
+					if(err) {
+						console.log(err);
+						res.send(err);
+					}	
+					else{
+						console.log("Sculpture saved");
 					}
-				);
-
+				});
 	      }
 	    });
 
@@ -136,7 +110,6 @@ router.post('/edit', function(req, res, next){
 						type: req.body.type,
 						number: number,
 						location: req.body.location
-
 						}
 					};
 				var options = {upsert: false, new: true};

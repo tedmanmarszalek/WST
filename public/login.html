@@ -13,8 +13,8 @@ var app = angular.module('login', []);
 
 app.controller('LoginCtrl', function ($scope, $http, $window) {
 
-  $scope.username = 'updadmin';
-  $scope.password = '@UPDWST123';
+  $scope.username = '';
+  $scope.password = '';
 
   $scope.submit = function(){
     var user = { 
@@ -23,9 +23,15 @@ app.controller('LoginCtrl', function ($scope, $http, $window) {
                };
 
     $http.post('/api/auth', user).then(function successCallback(response){
-      var token = response.data.token;
-      sessionStorage.setItem('token', token);
-      $window.location = "edit_selection.html";
+      if(response.data.success !== true){
+      	$scope.message = "Login Error";
+      }
+      else {
+	      var token = response.data.token;
+	      console.log(response);
+	      sessionStorage.setItem('token', token);
+	      $window.location = "edit_selection.html";
+	  }
     }, function errorCallback(response){
       console.log("error");
     });
@@ -51,6 +57,9 @@ app.controller('LoginCtrl', function ($scope, $http, $window) {
         </div>
 
         <button type="button" class="btn btn-primary" ng-click="submit()">Login</button>
+
+        <b><p style="font-size:24px; padding-top:20px; padding-bottom:40px; color:red;"> {{ message }} </p></b>
+
     </div>
 </body>
 </html>
