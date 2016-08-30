@@ -66,10 +66,10 @@ app.use('/api/locations', locations_router);
 app.use('/api/intro', intro_router);
 
 // uncomment for local testing
-app.listen(port);
+//app.listen(port);
 
 // uncomment for live
-// app.listen(port, ip); 
+app.listen(port, ip); 
 console.log("app started on " + port);
 
 // catch 404 and forward to error handler
